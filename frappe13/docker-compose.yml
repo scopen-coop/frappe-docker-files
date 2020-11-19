@@ -1,0 +1,54 @@
+version: "3.7"
+
+volumes:
+  frappe-mariadb-vol:
+       external: true
+  # postgresql-vol:
+
+services:
+  mariadb:
+    image: mariadb:10.3
+    environment:
+      - MYSQL_ROOT_PASSWORD=123
+      - MYSQL_USER=root
+    volumes:
+      - ../../frappe_docker_13/installation/frappe-mariadb.cnf:/etc/mysql/conf.d/frappe.cnf
+      - frappe-mariadb-vol:/var/lib/mysql
+
+  # Enable PostgreSQL only if you use it, see development/README.md for more information.
+  # postgresql:
+  #   image: postgres:11.8
+  #   restart: on-failure
+  #   environment:
+  #     - POSTGRES_PASSWORD=123
+  #   volumes:
+  #     - postgresql-vol:/var/lib/postgresql/data
+
+  redis-cache:
+    image: redis:alpine
+
+  redis-queue:
+    image: redis:alpine
+
+  redis-socketio:
+    image: redis:alpine
+
+  frappe:
+    image: frappe/bench:latest
+    command: bash -c "cd frappe-bench;bench start"
+    volumes:
+      - ../../frappe_docker_13:/workspace:cached
+    working_dir: /workspace/development/
+    ports:
+      - "8000-8005:8000-8005"
+      - "9000-9005:9000-9005"
+
+  adminer:
+    image: adminer
+    depends_on:
+      - mariadb
+    ports:
+      - 7000:8080
+
+
+
