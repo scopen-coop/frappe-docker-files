@@ -1,8 +1,18 @@
 version: "3.7"
 
 volumes:
-  frappe-mariadb-vol:
-       external: true
+  frappe13-mariadb-vol:
+    external: true
+    name: frappe13-mariadb-vol
+  frappe13-redis-cache-data:
+    external: true
+    name: frappe13-redis-cache-data
+  frappe13-redis-queue-data:
+    external: true
+    name: frappe13-redis-queue-data
+  frappe13-redis-socketio-data:
+    external: true
+    name: frappe13-redis-socketio-data
   # postgresql-vol:
 
 services:
@@ -13,7 +23,7 @@ services:
       - MYSQL_USER=root
     volumes:
       - ../../frappe_docker_13/installation/frappe-mariadb.cnf:/etc/mysql/conf.d/frappe.cnf
-      - frappe-mariadb-vol:/var/lib/mysql
+      - frappe13-mariadb-vol:/var/lib/mysql
 
   # Enable PostgreSQL only if you use it, see development/README.md for more information.
   # postgresql:
@@ -26,12 +36,18 @@ services:
 
   redis-cache:
     image: redis:alpine
+    volumes:
+      - frappe13-redis-cache-data:/data
 
   redis-queue:
     image: redis:alpine
+    volumes:
+      - frappe13-redis-queue-data:/data
 
   redis-socketio:
     image: redis:alpine
+    volumes:
+      - frappe13-redis-socketio-data:/data
 
   frappe:
     image: frappe/bench:latest
@@ -49,6 +65,3 @@ services:
       - mariadb
     ports:
       - 7000:8080
-
-
-

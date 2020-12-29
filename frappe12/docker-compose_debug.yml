@@ -1,8 +1,18 @@
 version: "3.7"
 
 volumes:
-  frappe-mariadb-vol:
-       external: true
+  frappe12-mariadb-vol:
+    external: true
+    name: frappe12-mariadb-vol
+  frappe12-redis-cache-data:
+    external: true
+    name: frappe12-redis-cache-data
+  frappe12-redis-queue-data:
+    external: true
+    name: frappe12-redis-queue-data
+  frappe12-redis-socketio-data:
+    external: true
+    name: frappe12-redis-socketio-data
   # postgresql-vol:
 
 services:
@@ -12,8 +22,8 @@ services:
       - MYSQL_ROOT_PASSWORD=123
       - MYSQL_USER=root
     volumes:
-      - ../../frappe_docker/installation/frappe-mariadb.cnf:/etc/mysql/conf.d/frappe.cnf
-      - frappe-mariadb-vol:/var/lib/mysql
+      - ../../frappe_docker_12/installation/frappe-mariadb.cnf:/etc/mysql/conf.d/frappe.cnf
+      - frappe12-mariadb-vol:/var/lib/mysql
 
   # Enable PostgreSQL only if you use it, see development/README.md for more information.
   # postgresql:
@@ -26,18 +36,24 @@ services:
 
   redis-cache:
     image: redis:alpine
+    volumes:
+      - frappe12-redis-cache-data:/data
 
   redis-queue:
     image: redis:alpine
+    volumes:
+      - frappe12-redis-queue-data:/data
 
   redis-socketio:
     image: redis:alpine
+    volumes:
+      - frappe12-redis-socketio-data:/data
 
   frappe:
     image: frappe/bench:latest
-    command: bash -c "cd frappe-bench;bench start"
+    command: sleep infinity
     volumes:
-      - ../../frappe_docker:/workspace:cached
+      - ../../frappe_docker_12:/workspace:cached
     working_dir: /workspace/development/
     ports:
       - "8000-8005:8000-8005"
@@ -49,6 +65,3 @@ services:
       - mariadb
     ports:
       - 7000:8080
-
-
-
