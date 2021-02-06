@@ -1,0 +1,20 @@
+version: "3.7"
+
+services:
+
+  portainer:
+    image: portainer/portainer-ce:alpine
+    restart: "no"
+    volumes:
+      - portainer-data-vol:/data portainer/portainer-ce
+    ports:
+      - "9000:9000"
+
+
+volumes:
+  portainer-data-vol:
+    external: true
+    name: portainer-data-vol
+
+
+
