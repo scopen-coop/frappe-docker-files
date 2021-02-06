@@ -45,6 +45,9 @@ For asset volumes directory
 Configure your local nginx, you can find sample nginx.conf.sample
 Note : the redirect port is currently 51899 also set into docker-compose.xml
 Do not forget to run certbot or complete nginx conf file
+```sh
+   certbot run --nginx --redirect -d YOUR_URL
+```
 
 ### Run compose
 copy env-sample to .env and edit file with your information

@@ -28,10 +28,13 @@ For portainer volumes : assuming /opt/portainer/data directory exists (see previ
 Configure your local nginx, you can find sample nginx.conf.sample
 Note : the redirect port is currently 51898 also set into docker-compose.xml
 Do not forget to run certbot or complete nginx conf file
+```sh
+   certbot run --nginx --redirect -d YOUR_URL
+```
 
 ### Run compose
 ```sh
     cd /home/..../portainer/
     docker-compose up
 ```
-go to https://your server
+go to https://YOUR_URL
