@@ -132,7 +132,7 @@ volumes:
   erpnext-redis-cache-vol:
     external: true
     name: erpnext-redis-cache-vol
-  erpnext-redis-queue-data:
+  erpnext-redis-queue-vol:
     external: true
     name: erpnext-redis-queue-vol
   erpnext-redis-socketio-vol:
