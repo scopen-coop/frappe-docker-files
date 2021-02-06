@@ -23,9 +23,14 @@ For portainer volumes : assuming /opt/portainer/data directory exists (see previ
 
 /home/..../frappe_docker_file => Clone of this repo
 
+### Nginx configuration
+
+Configure your local nginx, you can find sample nginx.conf.sample
+Note : the redirect port is currently 51898 also set into docker-compose.xml
+
 ### Run compose
 ```sh
     cd /home/..../portainer/
     docker-compose up
 ```
-go to https://your server:51898 
+go to https://your server

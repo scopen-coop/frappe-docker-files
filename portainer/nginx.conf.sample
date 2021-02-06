@@ -1,19 +1,17 @@
 server {
-    server_name YOUR_URL_ERPNEXT;
+    server_name YOUR_URL_PORTAINER;
 
     # Logs
-    access_log /var/log/nginx/erpnext.-access.log main;
-    error_log /var/log/nginx/erpnext.-error.log warn;
+    access_log /var/log/nginx/portainer-access.log main;
+    error_log /var/log/nginx/portainer-error.log warn;
 
     location / {
         include proxy_params;
-        proxy_pass http://0.0.0.0:51899/;
+        proxy_pass http://0.0.0.0:51898/;
     }
 }
 
 server {
-
-    server_name YOUR_URL_ERPNEXT;
+    server_name YOUR_URL_PORTAINER;
     listen 80;
-
 }

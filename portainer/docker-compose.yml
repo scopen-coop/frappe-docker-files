@@ -8,7 +8,7 @@ services:
     volumes:
       - portainer-data-vol:/data portainer/portainer-ce
     ports:
-      - "9000:9000"
+      - "51898:9000"
 
 
 volumes:
