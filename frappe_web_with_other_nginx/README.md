@@ -21,9 +21,9 @@ For mysql volumes : assuming /opt/data/frappe directory exists (see previous com
 
 For redis volumes assuming /opt/data/redis_redis_cache/, /opt/data/redit/frappe_redis_queue/,  /opt/data/redit/frappe_redis_socketio directories exists 
 ```sh
-docker volume create --driver local --opt type=none --opt device=/opt/erpnext/data/redis_redis_cache/ --opt o=bind erpnext-redis-cache-data
-docker volume create --driver local --opt type=none --opt device=opt/erpnext/data/redit/frappe_redis_queue/ --opt o=bind erpnext-redis-queue-data
-docker volume create --driver local --opt type=none --opt device=/opt/erpnext/data/redit/frappe_redis_socketio --opt o=bind erpnext-redis-socketio-data
+docker volume create --driver local --opt type=none --opt device=/opt/erpnext/data/redis_redis_cache/ --opt o=bind erpnext-redis-cache-vol;
+docker volume create --driver local --opt type=none --opt device=opt/erpnext/data/redit/frappe_redis_queue/ --opt o=bind erpnext-redis-queue-vol;
+docker volume create --driver local --opt type=none --opt device=/opt/erpnext/data/redit/frappe_redis_socketio --opt o=bind erpnext-redis-socketio-vol;
 ```
 
 For source volumes directory

@@ -129,15 +129,15 @@ volumes:
   erpnext-mariadb-vol:
     external: true
     name: erpnext-mariadb-vol
-  erpnext-redis-cache-data:
+  erpnext-redis-cache-vol:
     external: true
-    name: erpnext-redis-cache-data
+    name: erpnext-redis-cache-vol
   erpnext-redis-queue-data:
     external: true
-    name: erpnext-redis-queue-data
-  erpnext-redis-socketio-data:
+    name: erpnext-redis-queue-vol
+  erpnext-redis-socketio-vol:
     external: true
-    name: erpnext-redis-socketio-data
+    name: erpnext-redis-socketio-vol
   erpnext-assets-vol:
     external: true
     name: erpnext-assets-vol
