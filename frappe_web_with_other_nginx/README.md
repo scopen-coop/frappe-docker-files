@@ -40,7 +40,13 @@ For asset volumes directory
 
 /home/..../frappe_docker_file => Clone of this repo
 
+### Nginx configuration
+
+Configure your local nginx, you can find sample nginx.conf.sample
+Note : the redirect port is currently 51899 also set into docker-compose.xml
+
 ### Run compose
+copy env-sample to .env and edit file with your information
 ```sh
     cd /home/..../frappe_docker_file/
     docker-compose up
