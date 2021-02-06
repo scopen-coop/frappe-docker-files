@@ -36,16 +36,12 @@ For asset volumes directory
  docker volume create --driver local --opt type=none --opt device=/opt/erpnext/assets --opt o=bind erpnext-assets-vol
 ```
 
-### Directory sctruture
-
-/home/..../frappe_docker_XX => clone of https://github.com/frappe/frappe_docker
-
-Follow the instruction to install frappe with docker here : (https://github.com/frappe/frappe_docker/tree/develop/development) 
+### Clone this repo 
 
 /home/..../frappe_docker_file => Clone of this repo
 
 ### Run compose
 ```sh
-    cd /home/..../frappe_docker_file/frappe
+    cd /home/..../frappe_docker_file/
     docker-compose up
 ```
