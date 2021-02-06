@@ -1,7 +1,6 @@
-version: "3"
+version: "3.7"
 
 services:
-
   erpnext-nginx:
     image: frappe/erpnext-nginx:${ERPNEXT_VERSION}
     restart: on-failure
@@ -52,7 +51,7 @@ services:
 
   erpnext-worker-short:
     image: frappe/erpnext-worker:${ERPNEXT_VERSION}
-   restart: on-failure
+    restart: on-failure
     command: worker
     environment:
       - WORKER_TYPE=short
