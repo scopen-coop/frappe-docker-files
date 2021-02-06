@@ -16,7 +16,7 @@ services:
       - erpnext-sites-vol:/var/www/html/sites:rw
       - erpnext-assets-vol:/assets:rw
     ports:
-      - "80:51899"
+      - "51899:80"
 
   erpnext-python:
     image: frappe/erpnext-worker:${ERPNEXT_VERSION}
