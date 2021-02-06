@@ -1,6 +1,8 @@
 server {
     server_name YOUR_URL_PORTAINER;
 
+    listen 80;
+
     # Logs
     access_log /var/log/nginx/portainer-access.log main;
     error_log /var/log/nginx/portainer-error.log warn;
@@ -9,9 +11,4 @@ server {
         include proxy_params;
         proxy_pass http://0.0.0.0:51898/;
     }
-}
-
-server {
-    server_name YOUR_URL_PORTAINER;
-    listen 80;
 }

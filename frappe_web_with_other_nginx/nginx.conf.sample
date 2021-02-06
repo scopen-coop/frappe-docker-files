@@ -1,6 +1,8 @@
 server {
     server_name YOUR_URL_ERPNEXT;
 
+    listen 80;
+
     # Logs
     access_log /var/log/nginx/erpnext.-access.log main;
     error_log /var/log/nginx/erpnext.-error.log warn;
@@ -9,11 +11,4 @@ server {
         include proxy_params;
         proxy_pass http://0.0.0.0:51899/;
     }
-}
-
-server {
-
-    server_name YOUR_URL_ERPNEXT;
-    listen 80;
-
 }
