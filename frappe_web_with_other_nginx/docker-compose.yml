@@ -101,7 +101,7 @@ services:
     volumes:
       - erpnext-redis-socketio-vol:/data
 
-  mariadb:
+  erpnext-mariadb:
     image: mariadb:10.3
     restart: on-failure
     environment:
@@ -110,7 +110,7 @@ services:
       - ./installation/frappe-mariadb.cnf:/etc/mysql/conf.d/frappe.cnf
       - erpnext-mariadb-vol:/var/lib/mysql
 
-  site-creator:
+  erpnext-site-creator:
     image: frappe/erpnext-worker:${ERPNEXT_VERSION}
     restart: "no"
     command: new
@@ -124,6 +124,13 @@ services:
       - INSTALL_APPS=${INSTALL_APPS}
     volumes:
       - erpnext-sites-vol:/home/frappe/frappe-bench/sites:rw
+
+  adminer:
+    image: adminer
+    depends_on:
+      - erpnext-mariadb
+    ports:
+      - 7000:8080
 
 volumes:
   erpnext-mariadb-vol:

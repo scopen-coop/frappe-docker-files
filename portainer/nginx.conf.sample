@@ -10,5 +10,10 @@ server {
     location / {
         include proxy_params;
         proxy_pass http://0.0.0.0:51898/;
+
+        # WebSocket support
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
     }
 }

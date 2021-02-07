@@ -1,7 +1,6 @@
-LETSENCRYPT_EMAIL=email@example.com
 ERPNEXT_VERSION=edge
 FRAPPE_VERSION=edge
-MARIADB_HOST=mariadb
+MARIADB_HOST=erpnext-mariadb
 MYSQL_ROOT_PASSWORD=admin
 SITE_NAME=mysite.localhost
 SITES=`mysite.localhost`
