@@ -125,13 +125,6 @@ services:
     volumes:
       - erpnext-sites-vol:/home/frappe/frappe-bench/sites:rw
 
-  adminer:
-    image: adminer
-    depends_on:
-      - erpnext-mariadb
-    ports:
-      - 7000:8080
-
 volumes:
   erpnext-mariadb-vol:
     external: true
