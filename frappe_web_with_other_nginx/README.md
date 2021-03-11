@@ -53,5 +53,5 @@ Do not forget to run certbot or complete nginx conf file
 copy env-sample to .env and edit file with your information
 ```sh
     cd /home/..../frappe_docker_file/
-    docker-compose up
+    docker-compose --project-name erpnext up -d
 ```
