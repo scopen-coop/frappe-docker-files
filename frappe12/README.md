@@ -21,6 +21,14 @@ docker volume create --driver local --opt type=none --opt device=/opt/data/redis
 docker volume create --driver local --opt type=none --opt device=/opt/data/redis/frappe[XX]_redis_sockerio --opt o=bind frappe[XX]-redis-socketio-data
 ```
 
+### Network
+
+To name it to use it for others application like metabase
+
+```sh
+docker network create frappe-network
+```
+
 ### Directory sctruture
 
 /home/..../frappe
