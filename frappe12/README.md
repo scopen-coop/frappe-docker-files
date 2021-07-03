@@ -11,14 +11,14 @@
 
 Assuming /opt/data/frappe12/mysql directory exists 
 ```sh
- docker volume create --driver local --opt type=none --opt device=/opt/data/frappe12 --opt o=bind frappe12-mariadb-vol
+ docker volume create --driver local --opt type=none --opt device=/opt/data/frappe12/mysql --opt o=bind frappe12-mariadb-vol
 ```
 
 Assuming /opt/data/frappe12/redis_cache/, /opt/data/frappe12/redis_queue/,  /opt/data/frappe12/redis_socketio directories exists
 ```sh
 docker volume create --driver local --opt type=none --opt device=/opt/data/frappe12/redis_cache --opt o=bind frappe12-redis-cache-data
 docker volume create --driver local --opt type=none --opt device=/opt/data/frappe12/redis_queue --opt o=bind frappe12-redis-queue-data
-docker volume create --driver local --opt type=none --opt device=/opt/data/frappe12/redis_sockerio --opt o=bind frappe12-redis-socketio-data
+docker volume create --driver local --opt type=none --opt device=/opt/data/frappe12/redis_socketio --opt o=bind frappe12-redis-socketio-data
 ```
 
 ### Network
