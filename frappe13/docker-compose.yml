@@ -65,8 +65,8 @@ services:
 
   frappe:
     image: frappe/bench:latest
-    command: bash -c "cd frappe-bench;bench start"
-    # command: sleep infinity
+    # command: bash -c "cd frappe-bench;bench start"
+    command: sleep infinity
     volumes:
       - ../../frappe_docker_13:/workspace:cached
     working_dir: /workspace/development/

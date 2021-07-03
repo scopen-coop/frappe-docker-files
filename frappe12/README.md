@@ -46,11 +46,13 @@ For the first run edit docker-compose file and replace
 frappe:
     image: frappe/bench:latest
     command: bash -c "cd frappe-bench;bench start"
+    # command: sleep infinity
 ```
 by
 ```yaml
 frappe:
     image: frappe/bench:latest
+    # command: bash -c "cd frappe-bench;bench start"
     command: sleep infinity
 ```
 
@@ -91,4 +93,21 @@ If you'r going to intall more than one site
 
 ```sh
 bench config dns_multitenant on
+```
+
+
+Once first bench install is done you can revert docker-compose
+
+```yaml
+frappe:
+    image: frappe/bench:latest
+    # command: bash -c "cd frappe-bench;bench start"
+    command: sleep infinity
+```
+by
+```yaml
+frappe:
+    image: frappe/bench:latest
+    command: bash -c "cd frappe-bench;bench start"
+    # command: sleep infinity
 ```
