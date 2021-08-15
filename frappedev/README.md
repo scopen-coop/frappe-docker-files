@@ -54,6 +54,10 @@ frappe:
     command: sleep infinity
 ```
 
+and Replace /home/florian/....
+
+
+
 ```sh
     cd /home/..../frappe_docker_file/frappe
     docker-compose up
