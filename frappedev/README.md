@@ -9,12 +9,23 @@
 
 ### Create the Docker volume
 
-Assuming /opt/data/frappedev/mysql directory exists 
+Create directory if not exists
+```sh
+ mkdir -p  /opt/data/frappedev/mysql
+```
+Assuming now /opt/data/frappedev/mysql directory exists 
 ```sh
  docker volume create --driver local --opt type=none --opt device=/opt/data/frappedev/mysql --opt o=bind frappedev-mariadb-vol
 ```
 
-Assuming /opt/data/frappedev/redis_cache/, /opt/data/frappedev/redis_queue/,  /opt/data/frappedev/redis_socketio directories exists
+Create directory if not exists
+```sh
+ mkdir -p  /opt/data/frappedev/redis_cache;
+ mkdir -p  /opt/data/frappedev/redis_queue;
+ mkdir -p  /opt/data/frappedev/redis_socketio; 
+```
+
+Assuming now /opt/data/frappedev/redis_cache/, /opt/data/frappedev/redis_queue/,  /opt/data/frappedev/redis_socketio directories exists
 ```sh
 docker volume create --driver local --opt type=none --opt device=/opt/data/frappedev/redis_cache --opt o=bind frappedev-redis-cache-data;
 docker volume create --driver local --opt type=none --opt device=/opt/data/frappedev/redis_queue --opt o=bind frappedev-redis-queue-data;
@@ -35,37 +46,17 @@ docker network create frappe-network
 
 /home/..../frappe_docker_dev => clone of https://github.com/frappe/frappe_docker
 
-Follow the instruction to install frappe with docker here : (https://github.com/frappe/frappe_docker/tree/develop/development) 
-
 /home/..../frappe_docker_file => Clone of this repo
 
+Then follow the step given by official documentation
+[ERPNext/Frappe dev env install](https://github.com/frappe/frappe_docker/tree/develop/development)
+
 ### Run compose
-
-For the first run edit docker-compose file and replace 
-```yaml
-frappe:
-    image: frappe/bench:latest
-    command: bash -c "cd frappe-bench;bench start"
-```
-by
-```yaml
-frappe:
-    image: frappe/bench:latest
-    command: sleep infinity
-```
-
-and Replace /home/florian/....
-
-
 
 ```sh
     cd /home/..../frappe_docker_file/frappe
     docker-compose up
 ```
-
-
-Then follow the step given by official documentation
-[ERPNext/Frappe dev env install](https://github.com/frappe/frappe_docker/tree/develop/development)
 
 Enter into bash of the container
 ```sh
@@ -75,7 +66,7 @@ docker exec -e "TERM=xterm-256color" -w /workspace/development -it frappedev_fra
 inside container bash
 
 ```sh
-bench init --skip-redis-config-generation --frappe-branch version-13 frappe-bench
+bench init --skip-redis-config-generation --frappe-branch develop frappe-bench
 cd frappe-bench
 
 bench set-mariadb-host mariadb
@@ -85,7 +76,7 @@ bench set-redis-socketio-host redis-socketio:6379
 
 bench new-site [url without https:// probably local site name erpnext.local manage into /etc/hosts for local dev env] --mariadb-root-password 123 --admin-password admin --no-mariadb-socket --db-name [dbname]
 
-bench get-app --branch version-13 erpnext https://github.com/frappe/erpnext.git
+bench get-app --branch develop erpnext https://github.com/frappe/erpnext.git
 bench --site [url without https:// probably local site name erpnext.local manage into /etc/hosts for local dev env] install-app erpnext
 bench --site [url without https:// probably local site name erpnext.local manage into /etc/hosts for local dev env] set-config developer_mode 1
 bench --site [url without https:// probably local site name erpnext.local manage into /etc/hosts for local dev env] clear-cache

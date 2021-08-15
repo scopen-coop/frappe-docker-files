@@ -31,6 +31,8 @@ services:
       - frappe12-mariadb-vol:/var/lib/mysql
     networks:
       - frappe-network
+    ports:
+      - "33066:3306"
     # Enable PostgreSQL only if you use it, see development/README.md for more information.
   # postgresql:
   #   image: postgres:11.8
@@ -66,6 +68,9 @@ services:
     command: sleep infinity
     volumes:
       - ../../frappe_docker_12:/workspace:cached
+      - /home/${USER}/.ssh/id_rsa:/home/frappe/.ssh/id_rsa
+      - /home/${USER}/.ssh/id_rsa.pub:/home/frappe/.ssh/id_rsa.pub
+      - /home/${USER}/.ssh/known_hosts:/home/frappe/.ssh/known_hosts
     working_dir: /workspace/development/
     ports:
       - "8000-8005:8000-8005"
@@ -73,11 +78,11 @@ services:
     networks:
       - frappe-network
 
-  adminer:
-    image: adminer
-    depends_on:
-      - mariadb
-    ports:
-      - 7000:8080
-    networks:
-      - frappe-network
+  # adminer:
+  # image: adminer
+  # depends_on:
+  # - mariadb
+  # ports:
+  # - 7000:8080
+  # networks:
+  # - frappe-network

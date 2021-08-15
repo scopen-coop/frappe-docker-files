@@ -67,6 +67,9 @@ services:
     command: sleep infinity
     volumes:
       - ../../frappe_docker_13:/workspace:cached
+      - /home/${USER}/.ssh/id_rsa:/home/frappe/.ssh/id_rsa
+      - /home/${USER}/.ssh/id_rsa.pub:/home/frappe/.ssh/id_rsa.pub
+      - /home/${USER}/.ssh/known_hosts:/home/frappe/.ssh/known_hosts
     working_dir: /workspace/development/
     ports:
       - "8000-8005:8000-8005"
@@ -74,11 +77,11 @@ services:
     networks:
       - frappe-network
 
-  adminer:
-    image: adminer
-    depends_on:
-      - mariadb
-    ports:
-      - 7000:8080
-    networks:
-      - frappe-network
+  # adminer:
+  # image: adminer
+  # depends_on:
+  # - mariadb
+  # ports:
+  # - 7000:8080
+  # networks:
+  # - frappe-network

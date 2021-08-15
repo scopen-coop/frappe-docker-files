@@ -9,16 +9,28 @@
 
 ### Create the Docker volume
 
-Assuming /opt/data/frappe13/mysql directory exists 
+Create directory if not exists
+```sh
+ mkdir -p  /opt/data/frappe13/mysql
+```
+
+Assuming now /opt/data/frappe13/mysql directory exists 
 ```sh
  docker volume create --driver local --opt type=none --opt device=/opt/data/frappe13/mysql --opt o=bind frappe13-mariadb-vol
 ```
 
-Assuming /opt/data/frappe13/redis_cache/, /opt/data/frappe13/redis_queue/,  /opt/data/frappe13/redis_socketio directories exists
+Create directory if not exists
 ```sh
-docker volume create --driver local --opt type=none --opt device=/opt/data/frappe13/redis_cache --opt o=bind frappe13-redis-cache-data
-docker volume create --driver local --opt type=none --opt device=/opt/data/frappe13/redis_queue --opt o=bind frappe13-redis-queue-data
-docker volume create --driver local --opt type=none --opt device=/opt/data/frappe13/redis_socketio --opt o=bind frappe13-redis-socketio-data
+ mkdir -p  /opt/data/frappe13/redis_cache;
+ mkdir -p  /opt/data/frappe13/redis_queue;
+ mkdir -p  /opt/data/frappe13/redis_socketio; 
+```
+
+Assuming /now opt/data/frappe13/redis_cache/, /opt/data/frappe13/redis_queue/,  /opt/data/frappe13/redis_socketio directories exists
+```sh
+docker volume create --driver local --opt type=none --opt device=/opt/data/frappe13/redis_cache --opt o=bind frappe13-redis-cache-data;
+docker volume create --driver local --opt type=none --opt device=/opt/data/frappe13/redis_queue --opt o=bind frappe13-redis-queue-data;
+docker volume create --driver local --opt type=none --opt device=/opt/data/frappe13/redis_socketio --opt o=bind frappe13-redis-socketio-data;
 ```
 
 ### Network
@@ -35,33 +47,18 @@ docker network create frappe-network
 
 /home/..../frappe_docker_13 => clone of https://github.com/frappe/frappe_docker
 
-Follow the instruction to install frappe with docker here : (https://github.com/frappe/frappe_docker/tree/develop/development) 
-
 /home/..../frappe_docker_file => Clone of this repo
 
-### Run compose
+Then follow the step given by official documentation
+[ERPNext/Frappe dev env install](https://github.com/frappe/frappe_docker/tree/develop/development)
 
-For the first run edit docker-compose file and replace 
-```yaml
-frappe:
-    image: frappe/bench:latest
-    command: bash -c "cd frappe-bench;bench start"
-```
-by
-```yaml
-frappe:
-    image: frappe/bench:latest
-    command: sleep infinity
-```
+### Run compose
 
 ```sh
     cd /home/..../frappe_docker_file/frappe
     docker-compose up
 ```
 
-
-Then follow the step given by official documentation
-[ERPNext/Frappe dev env install](https://github.com/frappe/frappe_docker/tree/develop/development)
 
 Enter into bash of the container
 ```sh
