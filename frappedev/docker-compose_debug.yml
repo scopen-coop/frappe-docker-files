@@ -67,7 +67,7 @@ services:
     image: frappe/bench:latest
     command: sleep infinity
     volumes:
-      - ../../frappe_docker_dev:/workspace:cached
+      - ../../frappe_docker_dev:/workspace
       - /home/${USER}/.ssh/id_rsa:/home/frappe/.ssh/id_rsa
       - /home/${USER}/.ssh/id_rsa.pub:/home/frappe/.ssh/id_rsa.pub
       - /home/${USER}/.ssh/known_hosts:/home/frappe/.ssh/known_hosts
