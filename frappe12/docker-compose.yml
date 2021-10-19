@@ -68,10 +68,11 @@ services:
     command: bash -c "cd frappe-bench;bench start"
     # command: sleep infinity
     volumes:
-      - ../../frappe_docker_12:/workspace:cached
+      - ../../frappe_docker_12:/workspace
       - /home/${USER}/.ssh/id_rsa:/home/frappe/.ssh/id_rsa
       - /home/${USER}/.ssh/id_rsa.pub:/home/frappe/.ssh/id_rsa.pub
       - /home/${USER}/.ssh/known_hosts:/home/frappe/.ssh/known_hosts
+      - /home/${USER}/.bash_history:/home/frappe/.bash_history
     working_dir: /workspace/development/
     ports:
       - "8000-8005:8000-8005"
