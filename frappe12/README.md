@@ -1,4 +1,3 @@
-
 ### Need to do before
 
 [Install Docker](https://docs.docker.com/engine/install/ubuntu/)
@@ -6,27 +5,31 @@
 [Install docker-compose](https://docs.docker.com/compose/install/)
 [Docker Compose Completion](https://docs.docker.com/compose/completion/)
 
-
 ### Create the Docker volume
 
 Create directory if not exists
+
 ```sh
  mkdir -p  /opt/data/frappe12/mysql
 ```
 
-Assuming now /opt/data/frappe12/mysql directory exists 
+Assuming now /opt/data/frappe12/mysql directory exists
+
 ```sh
  docker volume create --driver local --opt type=none --opt device=/opt/data/frappe12/mysql --opt o=bind frappe12-mariadb-vol
 ```
 
 Create directory if not exists
+
 ```sh
  mkdir -p  /opt/data/frappe12/redis_cache;
  mkdir -p  /opt/data/frappe12/redis_queue;
  mkdir -p  /opt/data/frappe12/redis_socketio; 
 ```
 
-Assuming /opt/data/frappe12/redis_cache/, /opt/data/frappe12/redis_queue/,  /opt/data/frappe12/redis_socketio directories exists
+Assuming /opt/data/frappe12/redis_cache/, /opt/data/frappe12/redis_queue/, /opt/data/frappe12/redis_socketio directories
+exists
+
 ```sh
 docker volume create --driver local --opt type=none --opt device=/opt/data/frappe12/redis_cache --opt o=bind frappe12-redis-cache-data;
 docker volume create --driver local --opt type=none --opt device=/opt/data/frappe12/redis_queue --opt o=bind frappe12-redis-queue-data;
@@ -60,6 +63,7 @@ Then follow the step given by official documentation
 ```
 
 Enter into bash of the container
+
 ```sh
 docker exec -e "TERM=xterm-256color" -w /workspace/development -it frappe12_frappe_1 bash
 ```
@@ -67,7 +71,7 @@ docker exec -e "TERM=xterm-256color" -w /workspace/development -it frappe12_frap
 inside container bash
 
 ```sh
-bench init --skip-redis-config-generation --frappe-branch version-12 frappe-bench
+bench init --skip-redis-config-generation --frappe-branch version-12 --python python3.7 frappe-bench
 cd frappe-bench
 
 bench set-mariadb-host mariadb
@@ -89,19 +93,20 @@ If you'r going to intall more than one site
 bench config dns_multitenant on
 ```
 
-
 Once first bench install is done you can revert docker-compose
 
 ```yaml
 frappe:
-    image: frappe/bench:latest
-    # command: bash -c "cd frappe-bench;bench start"
-    command: sleep infinity
+  image: frappe/bench:latest
+  # command: bash -c "cd frappe-bench;bench start"
+  command: sleep infinity
 ```
+
 by
+
 ```yaml
 frappe:
-    image: frappe/bench:latest
-    command: bash -c "cd frappe-bench;bench start"
-    # command: sleep infinity
+  image: frappe/bench:latest
+  command: bash -c "cd frappe-bench;bench start"
+  # command: sleep infinity
 ```
