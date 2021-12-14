@@ -35,7 +35,7 @@ services:
       # Frappe doesn't use CONVERT_TZ() function that requires time zone info, so we can just skip it.
       - MYSQL_INITDB_SKIP_TZINFO=1
     volumes:
-      - frappe12-mariadb-vol:/var/lib/mysql
+      - frappe13-mariadb-vol:/var/lib/mysql
     networks:
       - frappe-network
     ports:
