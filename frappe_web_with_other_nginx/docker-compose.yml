@@ -1,6 +1,60 @@
 version: "3.7"
 
+volumes:
+  erpnext-mariadb-vol:
+    external: true
+    name: erpnext-mariadb-vol
+  erpnext-redis-cache-vol:
+    external: true
+    name: erpnext-redis-cache-vol
+  erpnext-redis-queue-vol:
+    external: true
+    name: erpnext-redis-queue-vol
+  erpnext-redis-socketio-vol:
+    external: true
+    name: erpnext-redis-socketio-vol
+  erpnext-assets-vol:
+    external: true
+    name: erpnext-assets-vol
+  erpnext-sites-vol:
+    external: true
+    name: erpnext-sites-vol
+
 services:
+  erpnext-mariadb:
+    image: mariadb:10.6
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --skip-character-set-client-handshake
+      - --skip-innodb-read-only-compressed # Temporary fix for MariaDB 10.6
+    restart: on-failure
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      # Sometimes db initialization takes longer than 10 seconds and site-creator goes away.
+      # Frappe doesn't use CONVERT_TZ() function that requires time zone info, so we can just skip it.
+      - MYSQL_INITDB_SKIP_TZINFO=1
+    volumes:
+      - erpnext-mariadb-vol:/var/lib/mysql
+
+  redis-cache:
+    image: redis:alpine
+    restart: on-failure
+    volumes:
+      - erpnext-redis-cache-vol:/data
+
+  redis-queue:
+    image: redis:alpine
+    restart: on-failure
+    volumes:
+      - erpnext-redis-queue-vol:/data
+
+  redis-socketio:
+    image: redis:alpine
+    restart: on-failure
+    volumes:
+      - erpnext-redis-socketio-vol:/data
+
   erpnext-nginx:
     image: frappe/erpnext-nginx:${ERPNEXT_VERSION}
     restart: on-failure
@@ -83,33 +137,6 @@ services:
     volumes:
       - erpnext-sites-vol:/home/frappe/frappe-bench/sites:rw
 
-  redis-cache:
-    image: redis:latest
-    restart: on-failure
-    volumes:
-      - erpnext-redis-cache-vol:/data
-
-  redis-queue:
-    image: redis:latest
-    restart: on-failure
-    volumes:
-      - erpnext-redis-queue-vol:/data
-
-  redis-socketio:
-    image: redis:latest
-    restart: on-failure
-    volumes:
-      - erpnext-redis-socketio-vol:/data
-
-  erpnext-mariadb:
-    image: mariadb:10.3
-    restart: on-failure
-    environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-    volumes:
-      - ./installation/frappe-mariadb.cnf:/etc/mysql/conf.d/frappe.cnf
-      - erpnext-mariadb-vol:/var/lib/mysql
-
   erpnext-site-creator:
     image: frappe/erpnext-worker:${ERPNEXT_VERSION}
     restart: "no"
@@ -125,25 +152,6 @@ services:
     volumes:
       - erpnext-sites-vol:/home/frappe/frappe-bench/sites:rw
 
-volumes:
-  erpnext-mariadb-vol:
-    external: true
-    name: erpnext-mariadb-vol
-  erpnext-redis-cache-vol:
-    external: true
-    name: erpnext-redis-cache-vol
-  erpnext-redis-queue-vol:
-    external: true
-    name: erpnext-redis-queue-vol
-  erpnext-redis-socketio-vol:
-    external: true
-    name: erpnext-redis-socketio-vol
-  erpnext-assets-vol:
-    external: true
-    name: erpnext-assets-vol
-  erpnext-sites-vol:
-    external: true
-    name: erpnext-sites-vol
 
 
 
