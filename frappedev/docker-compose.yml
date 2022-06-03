@@ -31,10 +31,6 @@ services:
       - --max_allowed_packet=512M
     environment:
       - MYSQL_ROOT_PASSWORD=123
-      - MYSQL_USER=root
-      # Sometimes db initialization takes longer than 10 seconds and site-creator goes away.
-      # Frappe doesn't use CONVERT_TZ() function that requires time zone info, so we can just skip it.
-      - MYSQL_INITDB_SKIP_TZINFO=1
     volumes:
       - frappedev-mariadb-vol:/var/lib/mysql
     networks:
