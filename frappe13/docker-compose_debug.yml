@@ -40,7 +40,7 @@ services:
     networks:
       - frappe-network
     ports:
-      - "33066:3306""
+      - "33066:3306"
 
   # Enable PostgreSQL only if you use it, see development/README.md for more information.
   # postgresql:
@@ -74,9 +74,13 @@ services:
 
   frappe:
     image: frappe/bench:latest
+    # command: bash -c "cd frappe-bench;bench start"
     command: sleep infinity
+    environment:
+      - SHELL=/bin/bash
     volumes:
       - ../../frappe_docker_13:/workspace
+      - ./.bash_aliases:/home/frappe/.bash_aliases
       - /home/${USER}/.ssh/id_rsa:/home/frappe/.ssh/id_rsa
       - /home/${USER}/.ssh/id_rsa.pub:/home/frappe/.ssh/id_rsa.pub
       - /home/${USER}/.ssh/known_hosts:/home/frappe/.ssh/known_hosts
@@ -97,3 +101,15 @@ services:
   # - 7000:8080
   # networks:
   # - frappe-network
+
+#  phpmyadmin:
+#    image: phpmyadmin/phpmyadmin
+#    container_name: frappe_phpmyadmin
+#    environment:
+#      PMA_HOST: mariadb
+#    depends_on:
+#      - mariadb
+#    ports:
+#      - "8080:80"
+#    networks:
+#      - frappe-network

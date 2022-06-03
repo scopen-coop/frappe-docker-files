@@ -97,3 +97,15 @@ services:
   # - 7000:8080
   # networks:
   # - frappe-network
+
+#  phpmyadmin:
+#    image: phpmyadmin/phpmyadmin
+#    container_name: frappe_phpmyadmin
+#    environment:
+#      PMA_HOST: mariadb
+#    depends_on:
+#      - mariadb
+#    ports:
+#      - "8080:80"
+#    networks:
+#      - frappe-network
