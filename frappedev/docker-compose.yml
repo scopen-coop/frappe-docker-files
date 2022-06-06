@@ -31,6 +31,7 @@ services:
       - --max_allowed_packet=512M
     environment:
         MYSQL_ROOT_PASSWORD: 123
+        MYSQL_ROOT_USER: root
     volumes:
       - frappedev-mariadb-vol:/var/lib/mysql
     networks:
