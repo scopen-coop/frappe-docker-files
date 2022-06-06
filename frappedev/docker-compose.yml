@@ -30,7 +30,7 @@ services:
       - --skip-innodb-read-only-compressed # Temporary fix for MariaDB 10.6
       - --max_allowed_packet=512M
     environment:
-      - MYSQL_ROOT_PASSWORD=123
+        MYSQL_ROOT_PASSWORD: 123
     volumes:
       - frappedev-mariadb-vol:/var/lib/mysql
     networks:
