@@ -75,7 +75,7 @@ services:
     # command: sleep infinity
     environment:
       - SHELL=/bin/bash
-      - SSH_AUTH_SOCK:$SSH_AUTH_SOCK
+      #- SSH_AUTH_SOCK:$SSH_AUTH_SOCK
     volumes:
       - ../../frappe_docker_dev:/workspace
       - ./.bash_aliases:/home/frappe/.bash_aliases
@@ -84,7 +84,7 @@ services:
       - /home/${USER}/.ssh/known_hosts:/home/frappe/.ssh/known_hosts
       - /home/${USER}/.bash_history:/home/frappe/.bash_history
       - /home/${USER}/.gitconfig:/home/frappe/.gitconfig
-      - $SSH_AUTH_SOCK:$SSH_AUTH_SOCK
+      #- $SSH_AUTH_SOCK:$SSH_AUTH_SOCK
     working_dir: /workspace/development/
     ports:
       - "8000-8005:8000-8005"
