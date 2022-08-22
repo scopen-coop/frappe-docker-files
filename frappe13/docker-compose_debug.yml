@@ -93,7 +93,7 @@ services:
       - frappe-network
 
   # adminer:
-  # image: adminer
+  # image: adminertest_work
   # depends_on:
   # - mariadb
   # ports:
