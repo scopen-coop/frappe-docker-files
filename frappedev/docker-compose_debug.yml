@@ -30,8 +30,8 @@ services:
       - --skip-innodb-read-only-compressed # Temporary fix for MariaDB 10.6
       - --max_allowed_packet=512M
     environment:
-      MYSQL_ROOT_PASSWORD: 123
-      MYSQL_ROOT_USER: root
+        MYSQL_ROOT_PASSWORD: 123
+        MYSQL_ROOT_USER: root
     volumes:
       - frappedev-mariadb-vol:/var/lib/mysql
     networks:
@@ -72,6 +72,9 @@ services:
   frappe:
     image: frappe/bench:latest
     command: sleep infinity
+    user: frappe:frappe
+    environment:
+      SSH_AUTH_SOCK: $SSH_AUTH_SOCK
     volumes:
       - ../../frappe_docker_dev:/workspace
       - /home/${USER}/.ssh/id_rsa:/home/frappe/.ssh/id_rsa
@@ -79,6 +82,8 @@ services:
       - /home/${USER}/.ssh/known_hosts:/home/frappe/.ssh/known_hosts
       - /home/${USER}/.bash_history:/home/frappe/.bash_history
       - /home/${USER}/.gitconfig:/home/frappe/.gitconfig
+      - .bash_aliases:/home/frappe/.bash_aliases
+      - $SSH_AUTH_SOCK:$SSH_AUTH_SOCK
     working_dir: /workspace/development/
     ports:
       - "8000-8005:8000-8005"
