@@ -78,8 +78,6 @@ services:
       SSH_AUTH_SOCK: $SSH_AUTH_SOCK
     volumes:
       - ../../frappe_docker_13:/workspace
-      - /home/${USER}/.ssh/id_rsa:/home/frappe/.ssh/id_rsa
-      - /home/${USER}/.ssh/id_rsa.pub:/home/frappe/.ssh/id_rsa.pub
       - /home/${USER}/.ssh/known_hosts:/home/frappe/.ssh/known_hosts
       - /home/${USER}/.bash_history:/home/frappe/.bash_history
       - /home/${USER}/.gitconfig:/home/frappe/.gitconfig
