@@ -70,7 +70,7 @@ services:
       - frappe-network
 
   frappe:
-    image: frappe/bench:latest
+    build: .
     command: sleep infinity
     user: frappe:frappe
     environment:
