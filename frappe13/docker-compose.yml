@@ -70,7 +70,7 @@ services:
       - frappe-network
 
   frappe:
-    image: .
+    build: .
     command: bash -c "cd frappe-bench;bench start"
     # command: sleep infinity
     user: frappe:frappe
