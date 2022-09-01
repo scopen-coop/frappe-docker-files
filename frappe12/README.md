@@ -62,7 +62,7 @@ Then follow the step given by official documentation
 
 Enter into bash of the container
 ```sh
-docker exec -e "TERM=xterm-256color" -w /workspace/development -it frappe13_frappe_1 bash
+docker exec -e "TERM=xterm-256color" -w /workspace/development -it frappe12_frappe_1 bash
 ```
 
 inside container bash
