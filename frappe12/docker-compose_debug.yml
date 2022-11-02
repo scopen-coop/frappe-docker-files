@@ -6,18 +6,18 @@ networks:
     external: true
 
 volumes:
-  frappe13-mariadb-vol:
+  frappe12-mariadb-vol:
     external: true
-    name: frappe13-mariadb-vol
-  frappe13-redis-cache-data:
+    name: frappe12-mariadb-vol
+  frappe12-redis-cache-data:
     external: true
-    name: frappe13-redis-cache-data
-  frappe13-redis-queue-data:
+    name: frappe12-redis-cache-data
+  frappe12-redis-queue-data:
     external: true
-    name: frappe13-redis-queue-data
-  frappe13-redis-socketio-data:
+    name: frappe12-redis-queue-data
+  frappe12-redis-socketio-data:
     external: true
-    name: frappe13-redis-socketio-data
+    name: frappe12-redis-socketio-data
   # postgresql-vol:
 
 services:
@@ -33,7 +33,7 @@ services:
       MYSQL_ROOT_PASSWORD: 123
       MYSQL_ROOT_USER: root
     volumes:
-      - frappe13-mariadb-vol:/var/lib/mysql
+      - frappe12-mariadb-vol:/var/lib/mysql
     networks:
       - frappe-network
     ports:
@@ -51,33 +51,33 @@ services:
   redis-cache:
     image: redis:alpine
     volumes:
-      - frappe13-redis-cache-data:/data
+      - frappe12-redis-cache-data:/data
     networks:
       - frappe-network
 
   redis-queue:
     image: redis:alpine
     volumes:
-      - frappe13-redis-queue-data:/data
+      - frappe12-redis-queue-data:/data
     networks:
       - frappe-network
 
   redis-socketio:
     image: redis:alpine
     volumes:
-      - frappe13-redis-socketio-data:/data
+      - frappe12-redis-socketio-data:/data
     networks:
       - frappe-network
 
   frappe:
     build: .
-    command: bash -c "cd frappe-bench;bench start"
-    # command: sleep infinity
+    # command: bash -c "cd frappe-bench;bench start"
+    command: sleep infinity
     user: frappe:frappe
     environment:
       SSH_AUTH_SOCK: $SSH_AUTH_SOCK
     volumes:
-      - ../../frappe_docker_13:/workspace
+      - ../../frappe_docker_12:/workspace
       - /home/${USER}/.ssh/known_hosts:/home/frappe/.ssh/known_hosts
       - /home/${USER}/.bash_history:/home/frappe/.bash_history
       - /home/${USER}/.gitconfig:/home/frappe/.gitconfig
@@ -93,7 +93,7 @@ services:
       - frappe-network
 
   # adminer:
-  # image: adminer
+  # image: adminertest_work
   # depends_on:
   # - mariadb
   # ports:
