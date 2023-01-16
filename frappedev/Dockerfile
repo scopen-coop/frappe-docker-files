@@ -48,12 +48,16 @@ RUN apt-get update \
     ssh-client \
     # VSCode container requirements
     net-tools \
-    # added for python missing depencies
+    # For pyenv build dependencies
+    # https://github.com/frappe/frappe_docker/issues/840#issuecomment-1185206895
     make \
-    zlib1g-dev \
+    # For pandas
     libbz2-dev \
-    libreadline-dev \
+    # For bench execute
     libsqlite3-dev \
+    # For other dependencies
+    zlib1g-dev \
+    libreadline-dev \
     llvm \
     libncurses5-dev \
     libncursesw5-dev \
@@ -85,16 +89,15 @@ USER frappe
 WORKDIR /home/frappe
 
 # Install Python via pyenv
-ENV PYTHON_VERSION_V13=3.9.9
 ENV PYTHON_VERSION=3.10.5
 ENV PYENV_ROOT /home/frappe/.pyenv
 ENV PATH $PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
 
 # From https://github.com/pyenv/pyenv#basic-github-checkout
 RUN git clone --depth 1 https://github.com/pyenv/pyenv.git .pyenv \
-    && pyenv install $PYTHON_VERSION_V13 \
     && pyenv install $PYTHON_VERSION \
-    && pyenv global $PYTHON_VERSION $PYTHON_VERSION_v13 \
+    && PYENV_VERSION=$PYTHON_VERSION pip install --no-cache-dir virtualenv \
+    && pyenv global $PYTHON_VERSION \
     && sed -Ei -e '/^([^#]|$)/ {a export PYENV_ROOT="/home/frappe/.pyenv" a export PATH="$PYENV_ROOT/bin:$PATH" a ' -e ':a' -e '$!{n;ba};}' ~/.profile \
     && echo 'eval "$(pyenv init --path)"' >>~/.profile \
     && echo 'eval "$(pyenv init -)"' >>~/.bashrc
@@ -105,12 +108,12 @@ ENV PATH /home/frappe/.local/bin:$PATH
 # Skip editable-bench warning
 # https://github.com/frappe/bench/commit/20560c97c4246b2480d7358c722bc9ad13606138
 RUN git clone ${GIT_REPO} --depth 1 -b ${GIT_BRANCH} .bench \
-    && pip install --user -e .bench \
+    && pip install --no-cache-dir --user -e .bench \
     && echo "export PATH=/home/frappe/.local/bin:\$PATH" >>/home/frappe/.bashrc \
     && echo "export BENCH_DEVELOPER=1" >>/home/frappe/.bashrc
 
 # Install Node via nvm
-ENV NODE_VERSION=14.18.1
+ENV NODE_VERSION=16.18.0
 ENV NVM_DIR /home/frappe/.nvm
 ENV PATH ${NVM_DIR}/versions/node/v${NODE_VERSION}/bin/:${PATH}
 
