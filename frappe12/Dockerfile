@@ -13,6 +13,9 @@ RUN apt-get update \
     postgresql-client \
     gettext-base \
     wget \
+    # for ERPNext v12
+    # TODO: Remove after v12 is deprecated
+    python2 \
     # for PDF
     libssl-dev \
     fonts-cantarell \
@@ -48,16 +51,12 @@ RUN apt-get update \
     ssh-client \
     # VSCode container requirements
     net-tools \
-    # For pyenv build dependencies
-    # https://github.com/frappe/frappe_docker/issues/840#issuecomment-1185206895
+     # added for python missing depencies
     make \
-    # For pandas
-    libbz2-dev \
-    # For bench execute
-    libsqlite3-dev \
-    # For other dependencies
     zlib1g-dev \
+    libbz2-dev \
     libreadline-dev \
+    libsqlite3-dev \
     llvm \
     libncurses5-dev \
     libncursesw5-dev \
@@ -89,15 +88,18 @@ USER frappe
 WORKDIR /home/frappe
 
 # Install Python via pyenv
+# Python 3.7 sits here for ERPNext version-12
+# TODO: Remove Python 3.7 when version-12 will not be supported
+ENV PYTHON_VERSION_V12=3.7.12
 ENV PYTHON_VERSION=3.10.5
 ENV PYENV_ROOT /home/frappe/.pyenv
 ENV PATH $PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
 
 # From https://github.com/pyenv/pyenv#basic-github-checkout
 RUN git clone --depth 1 https://github.com/pyenv/pyenv.git .pyenv \
+    && pyenv install $PYTHON_VERSION_V12 \
     && pyenv install $PYTHON_VERSION \
-    && PYENV_VERSION=$PYTHON_VERSION pip install --no-cache-dir virtualenv \
-    && pyenv global $PYTHON_VERSION \
+    && pyenv global $PYTHON_VERSION $PYTHON_VERSION_V12 \
     && sed -Ei -e '/^([^#]|$)/ {a export PYENV_ROOT="/home/frappe/.pyenv" a export PATH="$PYENV_ROOT/bin:$PATH" a ' -e ':a' -e '$!{n;ba};}' ~/.profile \
     && echo 'eval "$(pyenv init --path)"' >>~/.profile \
     && echo 'eval "$(pyenv init -)"' >>~/.bashrc
@@ -108,17 +110,20 @@ ENV PATH /home/frappe/.local/bin:$PATH
 # Skip editable-bench warning
 # https://github.com/frappe/bench/commit/20560c97c4246b2480d7358c722bc9ad13606138
 RUN git clone ${GIT_REPO} --depth 1 -b ${GIT_BRANCH} .bench \
-    && pip install --no-cache-dir --user -e .bench \
+    && pip install --user -e .bench \
     && echo "export PATH=/home/frappe/.local/bin:\$PATH" >>/home/frappe/.bashrc \
     && echo "export BENCH_DEVELOPER=1" >>/home/frappe/.bashrc
 
 # Install Node via nvm
-ENV NODE_VERSION=16.18.0
+ENV NODE_VERSION=14.18.1
+ENV NODE_VERSION_FRAPPEV11=10.24.1
 ENV NVM_DIR /home/frappe/.nvm
 ENV PATH ${NVM_DIR}/versions/node/v${NODE_VERSION}/bin/:${PATH}
 
 RUN wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash \
     && . ${NVM_DIR}/nvm.sh \
+    && nvm install ${NODE_VERSION_FRAPPEV11} \
+    && nvm use v${NODE_VERSION_FRAPPEV11} \
     && npm install -g yarn \
     && nvm install ${NODE_VERSION} \
     && nvm use v${NODE_VERSION} \

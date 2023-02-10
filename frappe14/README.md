@@ -55,7 +55,7 @@ Then follow the step given by official documentation
 
 ```sh
     cd /home/..../frappe_docker_file/frappe
-    docker-compose up
+    docker compose up
 ```
 
 Enter into bash of the container
@@ -104,5 +104,3 @@ frappe:
     command: bash -c "cd frappe-bench;bench start"
     # command: sleep infinity
 ```
-
-

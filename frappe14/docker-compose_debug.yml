@@ -91,6 +91,15 @@ services:
     networks:
       - frappe-network
 
+  frappe-maildev:
+    image: maildev/maildev
+    container_name: frappe-maildev
+    ports:
+      - "6081:1080"
+      - "25:1025"
+    networks:
+      - frappe-network
+
   # adminer:
   # image: adminer
   # depends_on:
@@ -99,3 +108,15 @@ services:
   # - 7000:8080
   # networks:
   # - frappe-network
+
+#  phpmyadmin:
+#    image: phpmyadmin/phpmyadmin
+#    container_name: frappe_phpmyadmin
+#    environment:
+#      PMA_HOST: mariadb
+#    depends_on:
+#      - mariadb
+#    ports:
+#      - "8080:80"
+#    networks:
+#      - frappe-network

@@ -6,18 +6,18 @@ networks:
     external: true
 
 volumes:
-  frappedev-mariadb-vol:
+  frappe12-mariadb-vol:
     external: true
-    name: frappedev-mariadb-vol
-  frappedev-redis-cache-data:
+    name: frappe12-mariadb-vol
+  frappe12-redis-cache-data:
     external: true
-    name: frappedev-redis-cache-data
-  frappedev-redis-queue-data:
+    name: frappe12-redis-cache-data
+  frappe12-redis-queue-data:
     external: true
-    name: frappedev-redis-queue-data
-  frappedev-redis-socketio-data:
+    name: frappe12-redis-queue-data
+  frappe12-redis-socketio-data:
     external: true
-    name: frappedev-redis-socketio-data
+    name: frappe12-redis-socketio-data
   # postgresql-vol:
 
 services:
@@ -30,10 +30,10 @@ services:
       - --skip-innodb-read-only-compressed # Temporary fix for MariaDB 10.6
       - --max_allowed_packet=512M
     environment:
-        MYSQL_ROOT_PASSWORD: 123
-        MYSQL_ROOT_USER: root
+      MYSQL_ROOT_PASSWORD: 123
+      MYSQL_ROOT_USER: root
     volumes:
-      - frappedev-mariadb-vol:/var/lib/mysql
+      - frappe12-mariadb-vol:/var/lib/mysql
     networks:
       - frappe-network
     ports:
@@ -51,21 +51,21 @@ services:
   redis-cache:
     image: redis:alpine
     volumes:
-      - frappedev-redis-cache-data:/data
+      - frappe12-redis-cache-data:/data
     networks:
       - frappe-network
 
   redis-queue:
     image: redis:alpine
     volumes:
-      - frappedev-redis-queue-data:/data
+      - frappe12-redis-queue-data:/data
     networks:
       - frappe-network
 
   redis-socketio:
     image: redis:alpine
     volumes:
-      - frappedev-redis-socketio-data:/data
+      - frappe12-redis-socketio-data:/data
     networks:
       - frappe-network
 
@@ -77,7 +77,7 @@ services:
     environment:
       SSH_AUTH_SOCK: $SSH_AUTH_SOCK
     volumes:
-      - ../../frappe_docker_dev:/workspace
+      - ../../frappe_docker_12:/workspace
       - /home/${USER}/.ssh/known_hosts:/home/frappe/.ssh/known_hosts
       - /home/${USER}/.bash_history:/home/frappe/.bash_history
       - /home/${USER}/.gitconfig:/home/frappe/.gitconfig
@@ -90,15 +90,6 @@ services:
       - "587:587"
       - "143:143"
     networks:
-      - frappe-network
-
-  frappe-maildev:
-      image: maildev/maildev
-      container_name: frappe-maildev
-      ports:
-        - "6081:1080"
-        - "25:1025"
-      networks:
       - frappe-network
 
   # adminer:

@@ -11,26 +11,26 @@
 
 Create directory if not exists
 ```sh
- mkdir -p  /opt/data/frappe13/mysql
+ mkdir -p  /opt/data/frappe12/mysql
 ```
 
-Assuming now /opt/data/frappe13/mysql directory exists 
+Assuming now /opt/data/frappe12/mysql directory exists 
 ```sh
- docker volume create --driver local --opt type=none --opt device=/opt/data/frappe13/mysql --opt o=bind frappe13-mariadb-vol
+ docker volume create --driver local --opt type=none --opt device=/opt/data/frappe12/mysql --opt o=bind frappe12-mariadb-vol
 ```
 
 Create directory if not exists
 ```sh
- mkdir -p  /opt/data/frappe13/redis_cache;
- mkdir -p  /opt/data/frappe13/redis_queue;
- mkdir -p  /opt/data/frappe13/redis_socketio; 
+ mkdir -p  /opt/data/frappe12/redis_cache;
+ mkdir -p  /opt/data/frappe12/redis_queue;
+ mkdir -p  /opt/data/frappe12/redis_socketio; 
 ```
 
-Assuming /now opt/data/frappe13/redis_cache/, /opt/data/frappe13/redis_queue/,  /opt/data/frappe13/redis_socketio directories exists
+Assuming /now opt/data/frappe12/redis_cache/, /opt/data/frappe12/redis_queue/,  /opt/data/frappe12/redis_socketio directories exists
 ```sh
-docker volume create --driver local --opt type=none --opt device=/opt/data/frappe13/redis_cache --opt o=bind frappe13-redis-cache-data;
-docker volume create --driver local --opt type=none --opt device=/opt/data/frappe13/redis_queue --opt o=bind frappe13-redis-queue-data;
-docker volume create --driver local --opt type=none --opt device=/opt/data/frappe13/redis_socketio --opt o=bind frappe13-redis-socketio-data;
+docker volume create --driver local --opt type=none --opt device=/opt/data/frappe12/redis_cache --opt o=bind frappe12-redis-cache-data;
+docker volume create --driver local --opt type=none --opt device=/opt/data/frappe12/redis_queue --opt o=bind frappe12-redis-queue-data;
+docker volume create --driver local --opt type=none --opt device=/opt/data/frappe12/redis_socketio --opt o=bind frappe12-redis-socketio-data;
 ```
 
 ### Network
@@ -45,7 +45,7 @@ docker network create frappe-network
 
 /home/..../frappe
 
-/home/..../frappe_docker_13 => clone of https://github.com/frappe/frappe_docker
+/home/..../frappe_docker_12 => clone of https://github.com/frappe/frappe_docker
 
 /home/..../frappe_docker_file => Clone of this repo
 
@@ -62,14 +62,14 @@ Then follow the step given by official documentation
 
 Enter into bash of the container
 ```sh
-docker exec -e "TERM=xterm-256color" -w /workspace/development -it frappe13_frappe_1 bash
+docker exec -e "TERM=xterm-256color" -w /workspace/development -it frappe12_frappe_1 bash
 ```
 
 inside container bash
 
 ```sh
-pyenv global 3.10.5 3.9.9;
-bench init --skip-redis-config-generation --frappe-branch version-13 --python python3.9 frappe-bench;
+pyenv global 3.10.5 3.7.12;
+bench init --skip-redis-config-generation --frappe-branch version-12 --python python3.7 frappe-bench;
 cd frappe-bench
 
 bench set-config -g db_host mariadb
