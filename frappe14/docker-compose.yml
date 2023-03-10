@@ -105,7 +105,18 @@ services:
     image: greenmail/standalone
     ports:
       - "6081:8080"
-      - "993:3993"
+    networks:
+      - frappe-network
+
+  roudcube:
+    image: roundcube/roundcubemail
+    environment:
+      ROUNDCUBEMAIL_DEFAULT_HOST: greenmail
+      ROUNDCUBEMAIL_DEFAULT_PORT: 3143
+      ROUNDCUBEMAIL_SMTP_SERVER: greenmail
+      ROUNDCUBEMAIL_SMTP_PORT: 3025
+    ports:
+      - "6082:80"
     networks:
       - frappe-network
 
