@@ -92,12 +92,20 @@ services:
     networks:
       - frappe-network
 
-  frappe-maildev:
-    image: maildev/maildev
-    container_name: frappe-maildev
+#  frappe-maildev:
+#    image: maildev/maildev
+#    container_name: frappe-maildev
+#    ports:
+#      - "6081:1080"
+#      - "25:1025"
+#    networks:
+#      - frappe-network
+
+  greenmail:
+    image: greenmail/standalone
     ports:
-      - "6081:1080"
-      - "25:1025"
+      - "6081:8080"
+      - "993:3993"
     networks:
       - frappe-network
 

@@ -108,4 +108,11 @@ frappe:
     # command: sleep infinity
 ```
 
+### For GreenMail 
+Setup Frappe Email Domain
+https://0.0.0.0:8000/app/email-domain/example.com
 
+IMAP
+Server : greenmail 
+port : 3143
+use IMAP : yes
