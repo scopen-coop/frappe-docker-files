@@ -1,9 +1,9 @@
-FROM debian:bullseye-slim as bench
+FROM debian:bookworm-slim as bench
 
 LABEL author=frappé
 
 ARG GIT_REPO=https://github.com/frappe/bench.git
-ARG GIT_BRANCH=develop
+ARG GIT_BRANCH=v5.x
 
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
@@ -95,7 +95,7 @@ USER frappe
 WORKDIR /home/frappe
 
 # Install Python via pyenv
-ENV PYTHON_VERSION=3.10.5
+ENV PYTHON_VERSION=3.10.12
 ENV PYENV_ROOT /home/frappe/.pyenv
 ENV PATH $PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
 
@@ -119,8 +119,8 @@ RUN git clone ${GIT_REPO} --depth 1 -b ${GIT_BRANCH} .bench \
     && echo "export BENCH_DEVELOPER=1" >>/home/frappe/.bashrc
 
 # Install Node via nvm
-ENV NODE_VERSION_14=14.19.3
-ENV NODE_VERSION=16.18.0
+ENV NODE_VERSION_14=18.12.0
+ENV NODE_VERSION=16.20.1
 ENV NVM_DIR /home/frappe/.nvm
 ENV PATH ${NVM_DIR}/versions/node/v${NODE_VERSION}/bin/:${PATH}
 
