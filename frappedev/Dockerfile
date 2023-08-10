@@ -96,17 +96,14 @@ WORKDIR /home/frappe
 
 # Install Python via pyenv
 ENV PYTHON_VERSION_DEVELOP=3.11.4
-ENV PYTHON_VERSION=3.10.12
 ENV PYENV_ROOT /home/frappe/.pyenv
 ENV PATH $PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
 
 # From https://github.com/pyenv/pyenv#basic-github-checkout
 RUN git clone --depth 1 https://github.com/pyenv/pyenv.git .pyenv \
     && pyenv install $PYTHON_VERSION_DEVELOP \
-    && pyenv install $PYTHON_VERSION \
     && PYENV_VERSION=$PYTHON_VERSION_DEVELOP pip install --no-cache-dir virtualenv \
-    && PYENV_VERSION=$PYTHON_VERSION pip install --no-cache-dir virtualenv \
-    && pyenv global $PYTHON_VERSION $PYTHON_VERSION_DEVELOP \
+    && pyenv global $PYTHON_VERSION_DEVELOP \
     && sed -Ei -e '/^([^#]|$)/ {a export PYENV_ROOT="/home/frappe/.pyenv" a export PATH="$PYENV_ROOT/bin:$PATH" a ' -e ':a' -e '$!{n;ba};}' ~/.profile \
     && echo 'eval "$(pyenv init --path)"' >>~/.profile \
     && echo 'eval "$(pyenv init -)"' >>~/.bashrc
@@ -123,19 +120,15 @@ RUN git clone ${GIT_REPO} --depth 1 -b ${GIT_BRANCH} .bench \
 
 # Install Node via nvm
 ENV NODE_VERSION_DEVELOP=18.12.0
-ENV NODE_VERSION=16.20.1
 ENV NVM_DIR /home/frappe/.nvm
-ENV PATH ${NVM_DIR}/versions/node/v${NODE_VERSION}/bin/:${PATH}
+ENV PATH ${NVM_DIR}/versions/node/v${NODE_VERSION_DEVELOP}/bin/:${PATH}
 
 RUN wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash \
     && . ${NVM_DIR}/nvm.sh \
     && nvm install ${NODE_VERSION_DEVELOP} \
     && nvm use v${NODE_VERSION_DEVELOP} \
     && npm install -g yarn \
-    && nvm install ${NODE_VERSION} \
-    && nvm use v${NODE_VERSION} \
-    && npm install -g yarn \
-    && nvm alias default v${NODE_VERSION} \
+    && nvm alias default v${NODE_VERSION_DEVELOP} \
     && rm -rf ${NVM_DIR}/.cache \
     && echo 'export NVM_DIR="/home/frappe/.nvm"' >>~/.bashrc \
     && echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm' >> ~/.bashrc \
