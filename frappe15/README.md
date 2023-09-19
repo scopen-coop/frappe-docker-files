@@ -11,25 +11,25 @@
 
 Create directory if not exists
 ```sh
- mkdir -p  /opt/data/frappedev/mysql
+ mkdir -p  /opt/data/frappe15/mysql
 ```
-Assuming now /opt/data/frappedev/mysql directory exists 
+Assuming now /opt/data/frappe15/mysql directory exists 
 ```sh
- docker volume create --driver local --opt type=none --opt device=/opt/data/frappedev/mysql --opt o=bind frappedev-mariadb-vol
+ docker volume create --driver local --opt type=none --opt device=/opt/data/frappe15/mysql --opt o=bind frappe15-mariadb-vol
 ```
 
 Create directory if not exists
 ```sh
- mkdir -p  /opt/data/frappedev/redis_cache;
- mkdir -p  /opt/data/frappedev/redis_queue;
- mkdir -p  /opt/data/frappedev/redis_socketio; 
+ mkdir -p  /opt/data/frappe15/redis_cache;
+ mkdir -p  /opt/data/frappe15/redis_queue;
+ mkdir -p  /opt/data/frappe15/redis_socketio; 
 ```
 
-Assuming now /opt/data/frappedev/redis_cache/, /opt/data/frappedev/redis_queue/,  /opt/data/frappedev/redis_socketio directories exists
+Assuming now /opt/data/frappe15/redis_cache/, /opt/data/frappe15/redis_queue/,  /opt/data/frappe15/redis_socketio directories exists
 ```sh
-docker volume create --driver local --opt type=none --opt device=/opt/data/frappedev/redis_cache --opt o=bind frappedev-redis-cache-data;
-docker volume create --driver local --opt type=none --opt device=/opt/data/frappedev/redis_queue --opt o=bind frappedev-redis-queue-data;
-docker volume create --driver local --opt type=none --opt device=/opt/data/frappedev/redis_socketio --opt o=bind frappedev-redis-socketio-data;
+docker volume create --driver local --opt type=none --opt device=/opt/data/frappe15/redis_cache --opt o=bind frappe15-redis-cache-data;
+docker volume create --driver local --opt type=none --opt device=/opt/data/frappe15/redis_queue --opt o=bind frappe15-redis-queue-data;
+docker volume create --driver local --opt type=none --opt device=/opt/data/frappe15/redis_socketio --opt o=bind frappe15-redis-socketio-data;
 ```
 
 ### Network
@@ -60,7 +60,7 @@ Then follow the step given by official documentation
 
 Enter into bash of the container
 ```sh
-docker exec -e "TERM=xterm-256color" -w /workspace/development -it frappedev_frappe_1 bash
+docker exec -e "TERM=xterm-256color" -w /workspace/development -it frappe15_frappe_1 bash
 ```
 
 inside container bash
