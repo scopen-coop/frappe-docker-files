@@ -124,7 +124,7 @@ http://0.0.0.0:6081/#post-/api/user
 Setup Frappe Account the password you just set in GreenMail
 https://0.0.0.0:8000/app/email-account/view/list
 
-### For Roudcube (to check email)
+### For Roundcube (to check email)
 
 with the email account you've created in Greenmail
 
