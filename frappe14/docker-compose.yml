@@ -22,7 +22,7 @@ volumes:
 
 services:
   mariadb:
-    image: mariadb:10.6
+    image: docker.io/mariadb:10.6
     command:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
@@ -49,21 +49,21 @@ services:
   #     - postgresql-vol:/var/lib/postgresql/data
 
   redis-cache:
-    image: redis:alpine
+    image: docker.io/redis:alpine
     volumes:
       - frappe14-redis-cache-data:/data
     networks:
       - frappe-network
 
   redis-queue:
-    image: redis:alpine
+    image: docker.io/redis:alpine
     volumes:
       - frappe14-redis-queue-data:/data
     networks:
       - frappe-network
 
   redis-socketio:
-    image: redis:alpine
+    image: docker.io/redis:alpine
     volumes:
       - frappe14-redis-socketio-data:/data
     networks:
@@ -103,14 +103,14 @@ services:
 #      - frappe-network
 
   greenmail:
-    image: greenmail/standalone
+    image: docker.io/greenmail/standalone
     ports:
       - "6081:8080"
     networks:
       - frappe-network
 
   roudcube:
-    image: roundcube/roundcubemail
+    image: docker.io/roundcube/roundcubemail
     environment:
       ROUNDCUBEMAIL_DEFAULT_HOST: greenmail
       ROUNDCUBEMAIL_DEFAULT_PORT: 3143
@@ -122,7 +122,7 @@ services:
       - frappe-network
 
   # adminer:
-  # image: adminer
+  # image: docker.io/adminer
   # depends_on:
   # - mariadb
   # ports:
@@ -131,7 +131,7 @@ services:
   # - frappe-network
 
 #  phpmyadmin:
-#    image: phpmyadmin/phpmyadmin
+#    image: docker.io/phpmyadmin/phpmyadmin
 #    container_name: frappe_phpmyadmin
 #    environment:
 #      PMA_HOST: mariadb
