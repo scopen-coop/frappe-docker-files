@@ -129,3 +129,11 @@ https://0.0.0.0:8000/app/email-account/view/list
 with the email account you've created in Greenmail
 
 http://0.0.0.0:6082
+
+### License
+
+GNU/General Public License (see [license.txt](../license.txt))
+
+This project is licensed as GNU General Public License (v3).
+
+By contributing to this project, you agree that your contributions will be licensed under its GNU General Public License (v3).
