@@ -12,6 +12,7 @@
 Create directory if not exists
 ```sh
  mkdir -p  /opt/data/frappe15/mysql
+ mkdir -p  /opt/data/frappe15/mysql
 ```
 Assuming now /opt/data/frappe15/mysql directory exists 
 ```sh
@@ -120,6 +121,11 @@ port : 3025
 
 In Green mail : Create user
 http://0.0.0.0:6081/#post-/api/user
+or run on host
+```
+curl -X POST "http://0.0.0.0:6081/api/user" -H "accept: application/json" -H "content-type: application/json" -d '{"email":"notifications@example.com","login":"notifications@example.com","password":"notifications@example.com"}';
+curl -X POST "http://0.0.0.0:6081/api/user" -H "accept: application/json" -H "content-type: application/json" -d '{"email":"replies@example.com","login":"replies@example.com","password":"replies@example.com"}'
+```
 
 Setup Frappe Account the password you just set in GreenMail
 https://0.0.0.0:8000/app/email-account/view/list
