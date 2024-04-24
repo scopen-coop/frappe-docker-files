@@ -94,16 +94,12 @@ services:
   greenmail:
     image: docker.io/greenmail/standalone
     environment:
-      GREENMAIL_OPTS: -Dgreenmail.setup.test.all \
-        -Dgreenmail.hostname=0.0.0.0 \
-        -Dgreenmail.tls.keystore.file=/home/greenmail/greenmail.p12 \
-        -Dgreenmail.tls.keystore.password=changeit \
-        -Dgreenmail.auth.disabled \
-        -Dgreenmail.users=notifications:notifications@example.com \
-        -Dgreenmail.users=replies:replies@example.com \
-        -Dgreenmail.users=email_linking:email_linking@example.com \
-        -Dgreenmail.users=support:support@example.com \
-        -Dgreenmail.users=sales:sales@example.com \
+      GREENMAIL_OPTS: -Dgreenmail.setup.test.all
+        -Dgreenmail.hostname=0.0.0.0
+        -Dgreenmail.tls.keystore.file=/home/greenmail/greenmail.p12 
+        -Dgreenmail.tls.keystore.password=changeit
+        -Dgreenmail.auth.disabled
+        -Dgreenmail.users=notifications:notifications@example.com,replies:replies@example.com,email_linking:email_linking@example.com,support:support@example.com,sales:sales@example.com
         -Dgreenmail.users.login=email
     ports:
       - "6081:8080"
