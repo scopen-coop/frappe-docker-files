@@ -12,7 +12,6 @@
 Create directory if not exists
 ```sh
  mkdir -p  /opt/data/frappe15/mysql
- mkdir -p  /opt/data/frappe15/mysql
 ```
 Assuming now /opt/data/frappe15/mysql directory exists 
 ```sh
@@ -67,20 +66,24 @@ docker exec -e "TERM=xterm-256color" -w /workspace/development -it frappe15_frap
 inside container bash
 
 ```sh
-bench init --skip-redis-config-generation --frappe-branch develop frappe-bench
-cd frappe-bench
+bench init --skip-redis-config-generation --frappe-branch version-15 frappe-bench;
+cd frappe-bench;
 
-bench set-config -g db_host mariadb
-bench set-config -g redis_cache redis://redis-cache:6379
-bench set-config -g redis_queue redis://redis-queue:6379
-bench set-config -g redis_socketio redis://redis-socketio:6379
+bench set-config -g db_host mariadb;
+bench set-config -g redis_cache redis://redis-cache:6379;
+bench set-config -g redis_queue redis://redis-queue:6379;
+bench set-config -g redis_socketio redis://redis-socketio:6379;
+bench set-config -g server_script_enabled 1;
 
-bench new-site [url without https:// probably local site name erpnext.local manage into /etc/hosts for local dev env] --mariadb-root-password 123 --admin-password admin --no-mariadb-socket --db-name [dbname]
+bench new-site [url without https:// probably local site name erpnext.local manage into /etc/hosts for local dev env] --mariadb-root-password 123 --admin-password admin --mariadb-user-host-login-scope='%' --db-name [dbname];
 
-bench get-app --branch develop erpnext https://github.com/frappe/erpnext.git
-bench --site [url without https:// probably local site name erpnext.local manage into /etc/hosts for local dev env] install-app erpnext
-bench --site [url without https:// probably local site name erpnext.local manage into /etc/hosts for local dev env] set-config developer_mode 1
-bench --site [url without https:// probably local site name erpnext.local manage into /etc/hosts for local dev env] clear-cache
+bench get-app --branch develop erpnext https://github.com/frappe/erpnext.git;
+bench --site [url without https:// probably local site name erpnext.local manage into /etc/hosts for local dev env] install-app erpnext;
+bench --site [url without https:// probably local site name erpnext.local manage into /etc/hosts for local dev env] set-config developer_mode 1;
+bench --site [url without https:// probably local site name erpnext.local manage into /etc/hosts for local dev env] clear-cache;
+
+bench --site all enable-scheduler;
+
 ```
 
 If you'r going to intall more than one site
@@ -135,7 +138,6 @@ https://0.0.0.0:8000/app/email-account/view/list
 with the email account you've created in Greenmail
 
 http://0.0.0.0:6082
-
 
 ### License
 

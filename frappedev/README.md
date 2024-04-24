@@ -66,20 +66,24 @@ docker exec -e "TERM=xterm-256color" -w /workspace/development -it frappedev_fra
 inside container bash
 
 ```sh
-bench init --skip-redis-config-generation --frappe-branch develop frappe-bench
-cd frappe-bench
+bench init --skip-redis-config-generation --frappe-branch develop frappe-bench;
+cd frappe-bench;
 
-bench set-config -g db_host mariadb
-bench set-config -g redis_cache redis://redis-cache:6379
-bench set-config -g redis_queue redis://redis-queue:6379
-bench set-config -g redis_socketio redis://redis-socketio:6379
+bench set-config -g db_host mariadb;
+bench set-config -g redis_cache redis://redis-cache:6379;
+bench set-config -g redis_queue redis://redis-queue:6379;
+bench set-config -g redis_socketio redis://redis-socketio:6379;
+bench set-config -g server_script_enabled 1;
 
-bench new-site [url without https:// probably local site name erpnext.local manage into /etc/hosts for local dev env] --mariadb-root-password 123 --admin-password admin --no-mariadb-socket --db-name [dbname]
+bench new-site [url without https:// probably local site name erpnext.local manage into /etc/hosts for local dev env] --mariadb-root-password 123 --admin-password admin --mariadb-user-host-login-scope='%' --db-name [dbname];
 
-bench get-app --branch develop erpnext https://github.com/frappe/erpnext.git
-bench --site [url without https:// probably local site name erpnext.local manage into /etc/hosts for local dev env] install-app erpnext
-bench --site [url without https:// probably local site name erpnext.local manage into /etc/hosts for local dev env] set-config developer_mode 1
-bench --site [url without https:// probably local site name erpnext.local manage into /etc/hosts for local dev env] clear-cache
+bench get-app --branch develop erpnext https://github.com/frappe/erpnext.git;
+bench --site [url without https:// probably local site name erpnext.local manage into /etc/hosts for local dev env] install-app erpnext;
+bench --site [url without https:// probably local site name erpnext.local manage into /etc/hosts for local dev env] set-config developer_mode 1;
+bench --site [url without https:// probably local site name erpnext.local manage into /etc/hosts for local dev env] clear-cache;
+
+bench --site all enable-scheduler;
+
 ```
 
 If you'r going to intall more than one site
@@ -120,11 +124,16 @@ port : 3025
 
 In Green mail : Create user
 http://0.0.0.0:6081/#post-/api/user
+or run on host
+```
+curl -X POST "http://0.0.0.0:6081/api/user" -H "accept: application/json" -H "content-type: application/json" -d '{"email":"notifications@example.com","login":"notifications@example.com","password":"notifications@example.com"}';
+curl -X POST "http://0.0.0.0:6081/api/user" -H "accept: application/json" -H "content-type: application/json" -d '{"email":"replies@example.com","login":"replies@example.com","password":"replies@example.com"}'
+```
 
 Setup Frappe Account the password you just set in GreenMail
 https://0.0.0.0:8000/app/email-account/view/list
 
-### For Roudcube (to check email)
+### For Roundcube (to check email)
 
 with the email account you've created in Greenmail
 
