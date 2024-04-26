@@ -130,7 +130,7 @@ But you can create more
 http://0.0.0.0:6081/#post-/api/user
 or run on host
 ```
-curl -X POST "http://0.0.0.0:6081/api/user" -H "accept: application/json" -H "content-type: application/json" -d '{"email":"notifications@example.com","login":"notifications@example.com","password":"notifications@example.com"}';
+curl -X POST "http://0.0.0.0:6081/api/user" -H "accept: application/json" -H "content-type: application/json" -d '{"email":"user1@test.com","login":"user1@test.com","password":"user1@test.com"}';
 ```
 
 Setup Frappe Account the password you just set in GreenMail
