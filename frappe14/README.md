@@ -118,14 +118,27 @@ SMTP
 Server : greenmail 
 port : 3025
 
-In Green mail : Create user
-http://0.0.0.0:6081/#post-/api/user
+In Green mail : Create user (they should already be created with docker compose)
+Check here
+http://0.0.0.0:6081/#get-/api/user
 
-Setup Frappe Account the password you just set in GreenMail
-https://0.0.0.0:8000/app/email-account/view/list
+But you can create more
+http://0.0.0.0:6081/#post-/api/user
+or run on host
+```
+curl -X POST "http://0.0.0.0:6081/api/user" -H "accept: application/json" -H "content-type: application/json" -d '{"email":"user1@test.com","login":"user1@test.com","password":"user1@test.com"}';
+```
 
 ### For Roundcube (to check email)
 
 with the email account you've created in Greenmail
 
 http://0.0.0.0:6082
+
+### License
+
+GNU/General Public License (see [license.txt](../license.txt))
+
+This project is licensed as GNU General Public License (v3).
+
+By contributing to this project, you agree that your contributions will be licensed under its GNU General Public License (v3).

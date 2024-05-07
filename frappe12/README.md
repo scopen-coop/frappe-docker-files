@@ -108,4 +108,10 @@ frappe:
     # command: sleep infinity
 ```
 
+### License
 
+GNU/General Public License (see [license.txt](../license.txt))
+
+This project is licensed as GNU General Public License (v3).
+
+By contributing to this project, you agree that your contributions will be licensed under its GNU General Public License (v3).

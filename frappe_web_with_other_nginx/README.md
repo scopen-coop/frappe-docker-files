@@ -61,3 +61,11 @@ copy **env-sample** to **.env** and edit file with your information
     cd /home/..../frappe_docker_file/
     docker-compose --project-name erpnext up -d
 ```
+
+### License
+
+GNU/General Public License (see [license.txt](../license.txt))
+
+This project is licensed as GNU General Public License (v3).
+
+By contributing to this project, you agree that your contributions will be licensed under its GNU General Public License (v3).
