@@ -69,7 +69,8 @@ RUN apt-get update \
     xz-utils \
     tk-dev \
     liblzma-dev \
-    file
+    file \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen \
     && dpkg-reconfigure --frontend=noninteractive locales
@@ -83,22 +84,6 @@ RUN if [ "$(uname -m)" = "aarch64" ]; then export ARCH=arm64; fi \
     && wget -q https://github.com/wkhtmltopdf/packaging/releases/download/$WKHTMLTOPDF_VERSION/$downloaded_file \
     && dpkg -i $downloaded_file \
     && rm $downloaded_file
-
-
-# Install Oracle client library
-RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
-    libaio1 \
-    unzip
-
-RUN wget -q https://download.oracle.com/otn_software/linux/instantclient/2340000/instantclient-basic-linux.x64-23.4.0.24.05.zip \
-    && unzip -D instantclient-basic-linux.x64-23.4.0.24.05.zip \
-    && mkdir /opt/oracleclient \
-    && mv instantclient_23_4/ /opt/oracleclient/ \
-    && rm instantclient-basic-linux.x64-23.4.0.24.05.zip \
-    && echo '/opt/oracleclient/instantclient_23_4' > /etc/ld.so.conf.d/oracle-instantclient.conf \
-    && ldconfig
-
-RUN rm -rf /var/lib/apt/lists/*
 
 # Create new user with home directory, improve docker compatibility with UID/GID 1000,
 # add user to sudo group, allow passwordless sudo, switch to that user
@@ -149,6 +134,7 @@ RUN wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | 
     && echo 'export NVM_DIR="/home/frappe/.nvm"' >>~/.bashrc \
     && echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm' >> ~/.bashrc \
     && echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion' >> ~/.bashrc
+
 
 EXPOSE 8000-8005 9000-9005 6787
 

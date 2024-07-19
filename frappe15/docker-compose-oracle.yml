@@ -68,7 +68,9 @@ services:
       - frappe-network
 
   frappe:
-    build: .
+    build:
+      context: .
+      dockerfile: DockerfileOracle
     command: bash -c "cd frappe-bench;bench start"
     # command: sleep infinity
     user: frappe:frappe
@@ -88,6 +90,7 @@ services:
       - "587:587"
       - "143:143"
       - "5432:5432"
+      - "1521:1521"
     networks:
       - frappe-network
 
