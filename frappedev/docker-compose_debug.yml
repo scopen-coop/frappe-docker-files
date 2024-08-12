@@ -83,11 +83,11 @@ services:
       - .bash_aliases:/home/frappe/.bash_aliases
       - $SSH_AUTH_SOCK:$SSH_AUTH_SOCK
     working_dir: /workspace/development/
-    ports:
-      - "8000-8005:8000-8005"
-      - "9000-9005:9000-9005"
-      - "587:587"
-      - "143:143"
+#    ports:
+#      - "8000-8005:8000-8005"
+#      - "9000-9005:9000-9005"
+#      - "587:587"
+#      - "143:143"
     networks:
       - frappe-network
 
