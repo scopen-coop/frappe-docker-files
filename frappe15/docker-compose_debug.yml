@@ -20,7 +20,7 @@ volumes:
 
 services:
   mariadb:
-    image: mariadb:10.6
+    image: docker.io/mariadb:10.6
     command:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
@@ -47,21 +47,21 @@ services:
   #     - postgresql-vol:/var/lib/postgresql/data
 
   redis-cache:
-    image: redis:alpine
+    image: docker.io/redis:alpine
     volumes:
       - frappe15-redis-cache-data:/data
     networks:
       - frappe-network
 
   redis-queue:
-    image: redis:alpine
+    image: docker.io/redis:alpine
     volumes:
       - frappe15-redis-queue-data:/data
     networks:
       - frappe-network
 
   redis-socketio:
-    image: redis:alpine
+    image: docker.io/redis:alpine
     volumes:
       - frappe15-redis-socketio-data:/data
     networks:
@@ -74,7 +74,7 @@ services:
     environment:
       SSH_AUTH_SOCK: $SSH_AUTH_SOCK
     volumes:
-      - ../../frappe_docker_dev:/workspace
+      - ../../frappe_docker_15:/workspace
       - /home/${USER}/.ssh/known_hosts:/home/frappe/.ssh/known_hosts
       - /home/${USER}/.bash_history:/home/frappe/.bash_history
       - /home/${USER}/.gitconfig:/home/frappe/.gitconfig
@@ -84,16 +84,56 @@ services:
     ports:
       - "8000-8005:8000-8005"
       - "9000-9005:9000-9005"
-      - "587:587"
-      - "143:143"
+#      - "587:587"
+#      - "143:143"
+#      - "5432:5432"
+    networks:
+      - frappe-network
+
+  greenmail:
+    image: docker.io/greenmail/standalone
+    environment:
+      GREENMAIL_OPTS: -Dgreenmail.setup.test.all
+        -Dgreenmail.hostname=0.0.0.0
+        -Dgreenmail.tls.keystore.file=/home/greenmail/greenmail.p12 
+        -Dgreenmail.tls.keystore.password=changeit
+        -Dgreenmail.auth.disabled
+        -Dgreenmail.users=notifications:notifications@example.com,replies:replies@example.com,email_linking:email_linking@example.com,support:support@example.com,sales:sales@example.com
+        -Dgreenmail.users.login=email
+    ports:
+      - "6081:8080"
+    networks:
+      - frappe-network
+
+  roudcube:
+    image: docker.io/roundcube/roundcubemail
+    environment:
+      ROUNDCUBEMAIL_DEFAULT_HOST: greenmail
+      ROUNDCUBEMAIL_DEFAULT_PORT: 3143
+      ROUNDCUBEMAIL_SMTP_SERVER: greenmail
+      ROUNDCUBEMAIL_SMTP_PORT: 3025
+    ports:
+      - "6082:80"
     networks:
       - frappe-network
 
   # adminer:
-  # image: adminer
+  # image: docker.io/adminer
   # depends_on:
   # - mariadb
   # ports:
   # - 7000:8080
   # networks:
   # - frappe-network
+
+#  phpmyadmin:
+#    image: docker.io/phpmyadmin/phpmyadmin
+#    container_name: frappe_phpmyadmin
+#    environment:
+#      PMA_HOST: mariadb
+#    depends_on:
+#      - mariadb
+#    ports:
+#      - "8080:80"
+#    networks:
+#      - frappe-network
