@@ -92,8 +92,8 @@ WORKDIR /home/frappe
 # TODO: Remove Python 3.7 when version-12 will not be supported
 ENV PYTHON_VERSION_V12=3.7.12
 ENV PYTHON_VERSION=3.10.5
-ENV PYENV_ROOT /home/frappe/.pyenv
-ENV PATH $PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
+ENV PYENV_ROOT=/home/frappe/.pyenv
+ENV PATH=$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
 
 # From https://github.com/pyenv/pyenv#basic-github-checkout
 RUN git clone --depth 1 https://github.com/pyenv/pyenv.git .pyenv \
@@ -106,7 +106,7 @@ RUN git clone --depth 1 https://github.com/pyenv/pyenv.git .pyenv \
 
 # Clone and install bench in the local user home directory
 # For development, bench source is located in ~/.bench
-ENV PATH /home/frappe/.local/bin:$PATH
+ENV PATH=/home/frappe/.local/bin:$PATH
 # Skip editable-bench warning
 # https://github.com/frappe/bench/commit/20560c97c4246b2480d7358c722bc9ad13606138
 RUN git clone ${GIT_REPO} --depth 1 -b ${GIT_BRANCH} .bench \
@@ -117,8 +117,8 @@ RUN git clone ${GIT_REPO} --depth 1 -b ${GIT_BRANCH} .bench \
 # Install Node via nvm
 ENV NODE_VERSION=14.18.1
 ENV NODE_VERSION_FRAPPEV11=10.24.1
-ENV NVM_DIR /home/frappe/.nvm
-ENV PATH ${NVM_DIR}/versions/node/v${NODE_VERSION}/bin/:${PATH}
+ENV NVM_DIR=/home/frappe/.nvm
+ENV PATH=${NVM_DIR}/versions/node/v${NODE_VERSION}/bin/:${PATH}
 
 RUN wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash \
     && . ${NVM_DIR}/nvm.sh \
