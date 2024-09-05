@@ -90,32 +90,32 @@ services:
     networks:
       - frappe-network
 
-  greenmail:
-    image: docker.io/greenmail/standalone
-    environment:
-      GREENMAIL_OPTS: -Dgreenmail.setup.test.all
-        -Dgreenmail.hostname=0.0.0.0
-        -Dgreenmail.tls.keystore.file=/home/greenmail/greenmail.p12 
-        -Dgreenmail.tls.keystore.password=changeit
-        -Dgreenmail.auth.disabled
-        -Dgreenmail.users=notifications:notifications@example.com,replies:replies@example.com,email_linking:email_linking@example.com,support:support@example.com,sales:sales@example.com
-        -Dgreenmail.users.login=email
-    ports:
-      - "6081:8080"
-    networks:
-      - frappe-network
-
-  roudcube:
-    image: docker.io/roundcube/roundcubemail
-    environment:
-      ROUNDCUBEMAIL_DEFAULT_HOST: greenmail
-      ROUNDCUBEMAIL_DEFAULT_PORT: 3143
-      ROUNDCUBEMAIL_SMTP_SERVER: greenmail
-      ROUNDCUBEMAIL_SMTP_PORT: 3025
-    ports:
-      - "6082:80"
-    networks:
-      - frappe-network
+#  greenmail:
+#    image: docker.io/greenmail/standalone
+#    environment:
+#      GREENMAIL_OPTS: -Dgreenmail.setup.test.all
+#        -Dgreenmail.hostname=0.0.0.0
+#        -Dgreenmail.tls.keystore.file=/home/greenmail/greenmail.p12
+#        -Dgreenmail.tls.keystore.password=changeit
+#        -Dgreenmail.auth.disabled
+#        -Dgreenmail.users=notifications:notifications@example.com,replies:replies@example.com,email_linking:email_linking@example.com,support:support@example.com,sales:sales@example.com
+#        -Dgreenmail.users.login=email
+#    ports:
+#      - "6081:8080"
+#    networks:
+#      - frappe-network
+#
+#  roundcube:
+#    image: docker.io/roundcube/roundcubemail
+#    environment:
+#      ROUNDCUBEMAIL_DEFAULT_HOST: greenmail
+#      ROUNDCUBEMAIL_DEFAULT_PORT: 3143
+#      ROUNDCUBEMAIL_SMTP_SERVER: greenmail
+#      ROUNDCUBEMAIL_SMTP_PORT: 3025
+#    ports:
+#      - "6082:80"
+#    networks:
+#      - frappe-network
 
   # adminer:
   # image: docker.io/adminer
