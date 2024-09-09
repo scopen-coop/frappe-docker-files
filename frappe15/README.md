@@ -44,7 +44,7 @@ docker network create frappe-network
 
 /home/..../frappe
 
-/home/..../frappe_docker_dev => clone of https://github.com/frappe/frappe_docker
+/home/..../frappe_docker_15 => clone of https://github.com/frappe/frappe_docker
 
 /home/..../frappe_docker_file => Clone of this repo
 
