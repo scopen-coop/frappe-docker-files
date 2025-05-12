@@ -1,4 +1,4 @@
-FROM debian:bookworm-slim as bench
+FROM debian:bookworm-slim AS bench
 
 LABEL author=frappé
 
@@ -70,6 +70,7 @@ RUN apt-get update \
     tk-dev \
     liblzma-dev \
     file \
+    pre-commit \
     && rm -rf /var/lib/apt/lists/*
 
 RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen \
@@ -96,7 +97,7 @@ USER frappe
 WORKDIR /home/frappe
 
 # Install Python via pyenv
-ENV PYTHON_VERSION=3.10.12
+ENV PYTHON_VERSION=3.10.13
 ENV PYENV_ROOT=/home/frappe/.pyenv
 ENV PATH=$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
 
@@ -142,7 +143,7 @@ RUN wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | 
 
 EXPOSE 8000-8005 9000-9005 6787
 
-FROM bench as bench-test
+FROM bench AS bench-test
 
 # Print version and verify bashrc is properly sourced so that everything works
 # in the interactive shell and Dockerfile

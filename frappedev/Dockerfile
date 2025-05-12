@@ -47,6 +47,7 @@ RUN apt-get update \
     libsasl2-dev \
     libtiff5-dev \
     libwebp-dev \
+    pkg-config \
     redis-tools \
     rlwrap \
     tk8.6-dev \
@@ -138,7 +139,7 @@ RUN wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | 
 
 EXPOSE 8000-8005 9000-9005 6787
 
-FROM bench as bench-test
+FROM bench AS bench-test
 
 # Print version and verify bashrc is properly sourced so that everything works
 # in the interactive shell and Dockerfile

@@ -98,7 +98,7 @@ services:
     networks:
       - frappe-network
 
-  roudcube:
+  roundcube:
     image: docker.io/roundcube/roundcubemail
     environment:
       ROUNDCUBEMAIL_DEFAULT_HOST: greenmail
