@@ -70,7 +70,7 @@ services:
   frappe:
     build: .
     command: bash -c "cd frappe-bench;bench start"
-    # command: sleep infinity
+    #command: sleep infinity
     user: frappe:frappe
     environment:
       SSH_AUTH_SOCK: $SSH_AUTH_SOCK
