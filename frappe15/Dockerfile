@@ -47,6 +47,7 @@ RUN apt-get update \
     libsasl2-dev \
     libtiff5-dev \
     libwebp-dev \
+    pkg-config \
     redis-tools \
     rlwrap \
     tk8.6-dev \
@@ -120,7 +121,7 @@ RUN git clone ${GIT_REPO} --depth 1 -b ${GIT_BRANCH} .bench \
     && echo "export BENCH_DEVELOPER=1" >>/home/frappe/.bashrc
 
 # Install Node via nvm
-ENV NODE_VERSION_15=18.18.2
+ENV NODE_VERSION_15=20.19.2
 ENV NVM_DIR=/home/frappe/.nvm
 ENV PATH=${NVM_DIR}/versions/node/v${NODE_VERSION_15}/bin/:${PATH}
 

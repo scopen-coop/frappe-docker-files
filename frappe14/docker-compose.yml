@@ -106,7 +106,7 @@ services:
     networks:
       - frappe-network
 
-  roudcube:
+  roundcube:
     image: docker.io/roundcube/roundcubemail
     environment:
       ROUNDCUBEMAIL_DEFAULT_HOST: greenmail
@@ -127,14 +127,14 @@ services:
   # networks:
   # - frappe-network
 
-#  phpmyadmin:
-#    image: docker.io/phpmyadmin/phpmyadmin
-#    container_name: frappe_phpmyadmin
-#    environment:
-#      PMA_HOST: mariadb
-#    depends_on:
-#      - mariadb
-#    ports:
-#      - "8080:80"
-#    networks:
-#      - frappe-network
+  phpmyadmin:
+    image: docker.io/phpmyadmin/phpmyadmin
+    container_name: frappe_phpmyadmin
+    environment:
+      PMA_HOST: mariadb
+    depends_on:
+      - mariadb
+    ports:
+      - "8080:80"
+    networks:
+      - frappe-network

@@ -96,7 +96,7 @@ services:
     environment:
       GREENMAIL_OPTS: -Dgreenmail.setup.test.all
         -Dgreenmail.hostname=0.0.0.0
-        -Dgreenmail.tls.keystore.file=/home/greenmail/greenmail.p12 
+        -Dgreenmail.tls.keystore.file=/home/greenmail/greenmail.p12
         -Dgreenmail.tls.keystore.password=changeit
         -Dgreenmail.auth.disabled
         -Dgreenmail.users=notifications:notifications@example.com,replies:replies@example.com,email_linking:email_linking@example.com,support:support@example.com,sales:sales@example.com
