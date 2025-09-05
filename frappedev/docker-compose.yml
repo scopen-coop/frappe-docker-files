@@ -69,7 +69,7 @@ services:
 
   frappe:
     build: .
-    command: bash -c "cd frappe-bench;bench start"
+    command: bash -c "cd frappe-bench;rm logs/*.log;bench start"
     # command: sleep infinity
     user: frappe:frappe
     environment:
