@@ -75,7 +75,7 @@ bench set-config -g redis_queue redis://redis-queue:6379;
 bench set-config -g redis_socketio redis://redis-socketio:6379;
 bench set-config -g server_script_enabled 1;
 
-bench new-site [url without https:// probably local site name erpnext.local manage into /etc/hosts for local dev env] --mariadb-root-password 123 --admin-password admin --mariadb-user-host-login-scope='%' --db-name [dbname];
+bench new-site [url without https:// probably local site name erpnext.local manage into /etc/hosts for local dev env] --mariadb-root-username root --mariadb-root-password 123 --admin-password admin --mariadb-user-host-login-scope='%' --db-name [dbname];
 
 bench get-app --branch develop erpnext https://github.com/frappe/erpnext.git;
 bench --site [url without https:// probably local site name erpnext.local manage into /etc/hosts for local dev env] install-app erpnext;
