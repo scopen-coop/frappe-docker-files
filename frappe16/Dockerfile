@@ -103,9 +103,9 @@ ENV PATH=$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
 
 # From https://github.com/pyenv/pyenv#basic-github-checkout
 RUN git clone --depth 1 https://github.com/pyenv/pyenv.git .pyenv \
-    && pyenv install PYTHON_VERSION_16 \
-    && PYENV_VERSION=PYTHON_VERSION_16 pip install --no-cache-dir virtualenv \
-    && pyenv global PYTHON_VERSION_16 \
+    && pyenv install $PYTHON_VERSION_16 \
+    && PYENV_VERSION=$PYTHON_VERSION_16 pip install --no-cache-dir virtualenv \
+    && pyenv global $PYTHON_VERSION_16 \
     && sed -Ei -e '/^([^#]|$)/ {a export PYENV_ROOT="/home/frappe/.pyenv" a export PATH="$PYENV_ROOT/bin:$PATH" a ' -e ':a' -e '$!{n;ba};}' ~/.profile \
     && echo 'eval "$(pyenv init --path)"' >>~/.profile \
     && echo 'eval "$(pyenv init -)"' >>~/.bashrc
