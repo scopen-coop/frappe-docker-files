@@ -75,7 +75,7 @@ services:
     environment:
       SSH_AUTH_SOCK: $SSH_AUTH_SOCK
     volumes:
-      - ../../frappe_docker_15:/workspace
+      - ../../frappe_docker_16:/workspace
       - /home/${USER}/.ssh/known_hosts:/home/frappe/.ssh/known_hosts
       - /home/${USER}/.bash_history:/home/frappe/.bash_history
       - /home/${USER}/.gitconfig:/home/frappe/.gitconfig

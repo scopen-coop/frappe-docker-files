@@ -66,7 +66,8 @@ docker exec -e "TERM=xterm-256color" -w /workspace/development -it frappe16_frap
 inside container bash
 
 ```sh
-bench init --skip-redis-config-generation --frappe-branch version-15 frappe-bench;
+# bench init --skip-redis-config-generation --frappe-branch version-16 frappe-bench;
+bench init --skip-redis-config-generation --frappe-branch develop frappe-bench;
 cd frappe-bench;
 
 bench set-config -g db_host mariadb;
