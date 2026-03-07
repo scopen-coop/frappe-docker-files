@@ -2,6 +2,11 @@
 
 Bundles of docker files and docker compose to run locally Frappe developer environement
 
+### Next (TBD)
+
+Experimental develop docker Frappe env cloud be the future 
+[Featured Scopen Frappe Docker CLI](https://github.com/scopen-coop/erpnext_docker)
+
 ### Need to do before
 
 [Install Docker](https://docs.docker.com/engine/install/ubuntu/)
