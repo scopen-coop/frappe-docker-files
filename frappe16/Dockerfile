@@ -23,6 +23,8 @@ RUN apt-get update \
     libharfbuzz0b \
     libpangoft2-1.0-0 \
     libpangocairo-1.0-0 \
+    #Chromium
+    chromium-headless-shell \
     # to work inside the container
     locales \
     build-essential \
@@ -71,6 +73,8 @@ RUN apt-get update \
     tk-dev \
     liblzma-dev \
     file \
+    # For MIME type detection
+    media-types \
     && rm -rf /var/lib/apt/lists/*
 
 RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen \
