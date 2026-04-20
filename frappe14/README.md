@@ -44,7 +44,7 @@ docker network create frappe-network
 
 /home/..../frappe
 
-/home/..../frappe_docker_dev => clone of https://github.com/frappe/frappe_docker
+/home/..../frappe_docker_14 => git clone https://github.com/frappe/frappe_docker frappe_docker_14
 
 /home/..../frappe_docker_file => Clone of this repo
 
@@ -54,19 +54,20 @@ Then follow the step given by official documentation
 ### Run compose
 
 ```sh
-    cd /home/..../frappe_docker_file/frappe
-    docker compose up
+    cd /home/..../frappe_docker_file/frappe14
+    docker compose build --build-arg CURRENT_UID=$(id -u);
+    docker compose up 
 ```
 
 Enter into bash of the container
 ```sh
-docker exec -e "TERM=xterm-256color" -w /workspace/development -it frappedev_frappe_1 bash
+docker exec -e "TERM=xterm-256color" -w /workspace/development -it frappe14-frappe-1 bash
 ```
 
 inside container bash
 
 ```sh
-bench init --skip-redis-config-generation --frappe-branch develop frappe-bench
+bench init --skip-redis-config-generation --frappe-branch version-14 frappe-bench
 cd frappe-bench
 
 bench set-config -g db_host mariadb
@@ -74,12 +75,23 @@ bench set-config -g redis_cache redis://redis-cache:6379
 bench set-config -g redis_queue redis://redis-queue:6379
 bench set-config -g redis_socketio redis://redis-socketio:6379
 
-bench new-site [url without https:// probably local site name erpnext.local manage into /etc/hosts for local dev env] --mariadb-root-password 123 --admin-password admin --no-mariadb-socket --db-name [dbname]
+bench new-site [url without https:// probably local site name erpnext.local manage into /etc/hosts for local dev env] --mariadb-root-username root --mariadb-root-password 123 --admin-password admin --no-mariadb-socket --db-name [dbname]
 
-bench get-app --branch develop erpnext https://github.com/frappe/erpnext.git
+bench get-app --branch version-14 erpnext https://github.com/frappe/erpnext.git
 bench --site [url without https:// probably local site name erpnext.local manage into /etc/hosts for local dev env] install-app erpnext
 bench --site [url without https:// probably local site name erpnext.local manage into /etc/hosts for local dev env] set-config developer_mode 1
 bench --site [url without https:// probably local site name erpnext.local manage into /etc/hosts for local dev env] clear-cache
+```
+
+Exemple
+```sh
+bench new-site erpnext14.local --mariadb-root-username root --mariadb-root-password 123 --admin-password admin --mariadb-user-host-login-scope='%' --db-name erpnext14;
+
+bench --site erpnext14.local install-app erpnext;
+bench --site erpnext14.local set-config developer_mode 1;
+bench --site erpnext14.local clear-cache;
+
+
 ```
 
 If you'r going to intall more than one site

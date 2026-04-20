@@ -44,7 +44,7 @@ docker network create frappe-network
 
 /home/..../frappe
 
-/home/..../frappe_docker_dev => clone of https://github.com/frappe/frappe_docker
+/home/..../frappe_docker_dev => git clone https://github.com/frappe/frappe_docker frappe_docker_dev
 
 /home/..../frappe_docker_file => Clone of this repo
 
@@ -55,12 +55,13 @@ Then follow the step given by official documentation
 
 ```sh
     cd /home/..../frappe_docker_file/frappe
-    docker-compose up
+    docker compose build --build-arg CURRENT_UID=$(id -u);
+    docker compose up
 ```
 
 Enter into bash of the container
 ```sh
-docker exec -e "TERM=xterm-256color" -w /workspace/development -it frappedev_frappe_1 bash
+docker exec -e "TERM=xterm-256color" -w /workspace/development -it frappedev-frappe+1 bash
 ```
 
 inside container bash
@@ -85,6 +86,18 @@ bench --site [url without https:// probably local site name erpnext.local manage
 bench --site all enable-scheduler;
 
 ```
+
+Exemple
+```sh
+bench new-site erpnextdev.local --mariadb-root-username root --mariadb-root-password 123 --admin-password admin --mariadb-user-host-login-scope='%' --db-name erpnextdev;
+
+bench --site erpnextdev.local install-app erpnext;
+bench --site erpnextdev.local set-config developer_mode 1;
+bench --site erpnextdev.local clear-cache;
+
+
+```
+
 
 If you'r going to intall more than one site
 

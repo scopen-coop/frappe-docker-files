@@ -4,6 +4,7 @@ LABEL author=frappé
 
 ARG GIT_REPO=https://github.com/frappe/bench.git
 ARG GIT_BRANCH=v5.x
+ARG CURRENT_UID=1000
 
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
@@ -93,8 +94,8 @@ RUN if [ "$(uname -m)" = "aarch64" ]; then export ARCH=arm64; fi \
 # Create new user with home directory, improve docker compatibility with UID/GID 1000,
 # add user to sudo group, allow passwordless sudo, switch to that user
 # and change directory to user home directory
-RUN groupadd -g 1000 frappe \
-    && useradd --no-log-init -r -m -u 1000 -g 1000 -G sudo frappe \
+RUN groupadd -g ${CURRENT_UID} frappe \
+    && useradd --no-log-init -r -m -u ${CURRENT_UID} -g ${CURRENT_UID} -G sudo frappe \
     && echo "frappe ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 USER frappe
