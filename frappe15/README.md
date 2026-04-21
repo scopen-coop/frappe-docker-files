@@ -40,13 +40,18 @@ To name it to use it for others application like metabase
 docker network create frappe-network
 ```
 
-### Directory sctruture
+### Directories structures
 
-/home/..../frappe
+```sh
+mkdir -p ~/frappe15; 
+cd ~/frappe15;
+git clone https://github.com/frappe/frappe_docker frappe_docker_15;
+git clone https://github.com/scopen-coop/frappe-docker-files.git
+```
 
-/home/..../frappe_docker_15 => git clone https://github.com/frappe/frappe_docker frappe_docker_15
-
-/home/..../frappe_docker_file => Clone of this repo
+You should have now 
+/home/..../frappe_docker_15 => git clone of https://github.com/frappe/frappe_docker
+/home/..../frappe_docker_file => git clone this repositories 
 
 Then follow the step given by official documentation
 [ERPNext/Frappe dev env install](https://github.com/frappe/frappe_docker/tree/develop/development)
@@ -99,12 +104,12 @@ bench --site erpnext15.local clear-cache;
 ```
 
 
-If you'r going to intall more than one site
+If you're going to install more than one site
 
 ```sh
 bench config dns_multitenant on
 ```
-
+You should probably update your /etc/hosts to match site name
 
 Once first bench install is done you can revert docker-compose
 
