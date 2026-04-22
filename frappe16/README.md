@@ -83,7 +83,7 @@ bench set-config -g redis_queue redis://redis-queue:6379;
 bench set-config -g redis_socketio redis://redis-socketio:6379;
 bench set-config -g server_script_enabled 1;
 
-bench new-site [url without https:// probably local site name erpnext.local manage into /etc/hosts for local dev env] --mariadb-root-username root --mariadb-root-password 123 --admin-password admin --mariadb-user-host-login-scope='%' --db-name [dbname];
+bench new-site [url without https:// probably local site name erpnext.local manage into /etc/hosts for local dev env] --mariadb-root-password 123 --admin-password admin --mariadb-user-host-login-scope='%' --db-name [dbname];
 
 bench get-app --branch version-16 erpnext https://github.com/frappe/erpnext.git;
 bench --site [url without https:// probably local site name erpnext.local manage into /etc/hosts for local dev env] install-app erpnext;
@@ -96,7 +96,7 @@ bench --site all enable-scheduler;
 
 Exemple
 ```sh
-bench new-site erpnext16.local --mariadb-root-username root --mariadb-root-password 123 --admin-password admin --mariadb-user-host-login-scope='%' --db-name erpnext16;
+bench new-site erpnext16.local --mariadb-root-password 123 --admin-password admin --mariadb-user-host-login-scope='%' --db-name erpnext16;
 
 bench --site erpnext16.local install-app erpnext;
 bench --site erpnext16.local set-config developer_mode 1;
@@ -104,6 +104,7 @@ bench --site erpnext16.local clear-cache;
 
 
 ```
+Note we do not send "--mariadb-root-user root" here, it do not work in version-16
 
 
 If you'r going to intall more than one site
