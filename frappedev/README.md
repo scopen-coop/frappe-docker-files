@@ -51,7 +51,7 @@ git clone https://github.com/scopen-coop/frappe-docker-files.git
 ```
 
 You should have now 
-/home/..../frappe_docker_develop => git clone of https://github.com/frappe/frappe_docker
+/home/..../frappe_docker_dev => git clone of https://github.com/frappe/frappe_docker
 /home/..../frappe_docker_file => git clone this repositories 
 
 Then follow the step given by official documentation
@@ -60,7 +60,7 @@ Then follow the step given by official documentation
 ### Run compose
 
 ```sh
-    cd /home/..../frappe_docker_file/frappe
+    cd /home/..../frappe_docker_file/frappedev
     docker compose build --build-arg CURRENT_UID=$(id -u);
     docker compose up
 ```
