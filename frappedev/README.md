@@ -44,14 +44,14 @@ docker network create frappe-network
 
 
 ```sh
-mkdir -p ~/frappe16; 
-cd ~/frappe16;
-git clone https://github.com/frappe/frappe_docker frappe_docker_16;
+mkdir -p ~/frappedev; 
+cd ~/frappedev;
+git clone https://github.com/frappe/frappe_docker frappe_docker_develop;
 git clone https://github.com/scopen-coop/frappe-docker-files.git
 ```
 
 You should have now 
-/home/..../frappe_docker_16 => git clone of https://github.com/frappe/frappe_docker
+/home/..../frappe_docker_develop => git clone of https://github.com/frappe/frappe_docker
 /home/..../frappe_docker_file => git clone this repositories 
 
 Then follow the step given by official documentation
@@ -67,7 +67,7 @@ Then follow the step given by official documentation
 
 Enter into bash of the container
 ```sh
-docker exec -e "TERM=xterm-256color" -w /workspace/development -it frappedev-frappe+1 bash
+docker exec -e "TERM=xterm-256color" -w /workspace/development -it frappedev-frappe-1 bash
 ```
 
 inside container bash
