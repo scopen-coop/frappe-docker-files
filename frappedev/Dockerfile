@@ -132,7 +132,8 @@ RUN git clone ${GIT_REPO} --depth 1 -b ${GIT_BRANCH} .bench \
 # Install Node via nvm
 ENV NODE_VERSION_16=24
 ENV NVM_DIR=/home/frappe/.nvm
-ENV PATH=${NVM_DIR}/versions/node/v${NODE_VERSION_DEVELOP}/bin/:${PATH}
+ENV NVM_SYMLINK_CURRENT=true
+ENV PATH=${NVM_DIR}/current/bin/:${PATH}
 
 RUN wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash \
     && . ${NVM_DIR}/nvm.sh \
