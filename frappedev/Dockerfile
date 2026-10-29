@@ -1,4 +1,5 @@
-FROM debian:bookworm-slim AS bench
+ARG DEBIAN_BASE=trixie
+FROM debian:${DEBIAN_BASE}-slim AS bench
 
 LABEL author=frappé
 
@@ -6,10 +7,13 @@ ARG GIT_REPO=https://github.com/frappe/bench.git
 ARG GIT_BRANCH=v5.x
 ARG CURRENT_UID=1000
 ARG INSTALL_CHROMIUM=true
+ARG WKHTMLTOPDF_VERSION=0.12.6.1-3
+ARG WKHTMLTOPDF_DISTRO=bookworm
 
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
     # For frappe framework
+    ca-certificates \
     git \
     mariadb-client \
     postgresql-client \
@@ -37,7 +41,6 @@ RUN apt-get update \
     tree \
     nano \
     less \
-    software-properties-common \
     bash-completion \
     # For psycopg2
     libpq-dev \
@@ -47,7 +50,7 @@ RUN apt-get update \
     libldap2-dev \
     libmariadb-dev \
     libsasl2-dev \
-    libtiff5-dev \
+    libtiff-dev \
     libwebp-dev \
     pkg-config \
     redis-tools \
@@ -75,6 +78,17 @@ RUN apt-get update \
     file \
     # For MIME type detection
     media-types \
+    && . /etc/os-release \
+    && if [ "$VERSION_CODENAME" = "trixie" ]; then \
+        apt-get install --no-install-recommends -y tzdata-legacy; \
+    fi \
+    # Install wkhtmltopdf with patched qt
+    && if [ "$(uname -m)" = "aarch64" ]; then export ARCH=arm64; fi \
+    && if [ "$(uname -m)" = "x86_64" ]; then export ARCH=amd64; fi \
+    && downloaded_file=wkhtmltox_${WKHTMLTOPDF_VERSION}.${WKHTMLTOPDF_DISTRO}_${ARCH}.deb \
+    && curl -sLO https://github.com/wkhtmltopdf/packaging/releases/download/$WKHTMLTOPDF_VERSION/$downloaded_file \
+    && apt-get install --no-install-recommends -y ./$downloaded_file \
+    && rm $downloaded_file \
     # Chromium
     && if [ "$INSTALL_CHROMIUM" != "false" ]; then \
         DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
@@ -84,16 +98,6 @@ RUN apt-get update \
 
 RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen \
     && dpkg-reconfigure --frontend=noninteractive locales
-
-# Detect arch and install wkhtmltopdf
-ARG WKHTMLTOPDF_VERSION=0.12.6.1-3
-ARG WKHTMLTOPDF_DISTRO=bookworm
-RUN if [ "$(uname -m)" = "aarch64" ]; then export ARCH=arm64; fi \
-    && if [ "$(uname -m)" = "x86_64" ]; then export ARCH=amd64; fi \
-    && downloaded_file=wkhtmltox_${WKHTMLTOPDF_VERSION}.${WKHTMLTOPDF_DISTRO}_${ARCH}.deb \
-    && wget -q https://github.com/wkhtmltopdf/packaging/releases/download/$WKHTMLTOPDF_VERSION/$downloaded_file \
-    && dpkg -i $downloaded_file \
-    && rm $downloaded_file
 
 # Create new user with home directory, improve docker compatibility with UID/GID 1000,
 # add user to sudo group, allow passwordless sudo, switch to that user
@@ -112,9 +116,9 @@ ENV PATH=$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
 
 # From https://github.com/pyenv/pyenv#basic-github-checkout
 RUN git clone --depth 1 https://github.com/pyenv/pyenv.git .pyenv \
-    && pyenv install $PYTHON_VERSION_DEVELOP \
-    && PYENV_VERSION=$PYTHON_VERSION_DEVELOP pip install --no-cache-dir virtualenv \
-    && pyenv global $PYTHON_VERSION_DEVELOP \
+    && pyenv install $PYTHON_VERSION_16 \
+    && PYENV_VERSION=$PYTHON_VERSION_16 pip install --no-cache-dir virtualenv \
+    && pyenv global $PYTHON_VERSION_16 \
     && sed -Ei -e '/^([^#]|$)/ {a export PYENV_ROOT="/home/frappe/.pyenv" a export PATH="$PYENV_ROOT/bin:$PATH" a ' -e ':a' -e '$!{n;ba};}' ~/.profile \
     && echo 'eval "$(pyenv init --path)"' >>~/.profile \
     && echo 'eval "$(pyenv init -)"' >>~/.bashrc
@@ -137,10 +141,10 @@ ENV PATH=${NVM_DIR}/current/bin/:${PATH}
 
 RUN wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash \
     && . ${NVM_DIR}/nvm.sh \
-    && nvm install ${NODE_VERSION_DEVELOP} \
-    && nvm use v${NODE_VERSION_DEVELOP} \
+    && nvm install ${NODE_VERSION_16} \
+    && nvm use v${NODE_VERSION_16} \
     && npm install -g yarn \
-    && nvm alias default v${NODE_VERSION_DEVELOP} \
+    && nvm alias default v${NODE_VERSION_16} \
     && rm -rf ${NVM_DIR}/.cache \
     && echo 'export NVM_DIR="/home/frappe/.nvm"' >>~/.bashrc \
     && echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm' >> ~/.bashrc \
